@@ -1,0 +1,12 @@
+*.iml
+.gradle
+/.idea
+/local.properties
+.DS_Store
+/build
+/captures
+
+# Keystore
+*.jks
+
+fabric.properties

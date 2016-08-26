@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.github.ryanhoo.firFlight">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- BugHD -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- For update receiver -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:name=".FlightApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/ff.app.name"
+        android:supportsRtl="false"
+        android:theme="@style/FFTheme">
+        <activity
+            android:name=".ui.SplashScreenActivity"
+            android:label="@string/ff.app.name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/FFTheme.Splash"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/FFTheme.Main" />
+        <activity
+            android:name=".ui.webview.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FFTheme.WebView" />
+        <activity
+            android:name=".ui.setting.SettingsActivity"
+            android:label="@string/ff.settings"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.about.AboutActivity"
+            android:label="@string/ff.about"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.about.AcknowledgementsActivity"
+            android:label="@string/ff.acknowledgements"
+            android:screenOrientation="portrait" />
+
+        <receiver android:name=".receiver.SystemPackageReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.FlightReceiver">
+            <intent-filter>
+                <action android:name="io.github.ryanhoo.action.UPDATE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.FlightService"
+            android:exported="false" />
+
+        <meta-data
+            android:name="io.github.ryanhoo.firFlight.GlideConfiguration"
+            android:value="GlideModule" />
+
+        <!-- <meta-data -->
+        <!-- android:name="io.fabric.ApiKey" -->
+        <!-- android:value="${fabricApiKey}" /> -->
+
+        <meta-data
+            android:name="FLIGHT_FLAVOR_NAME"
+            android:value="${flightFlavorName}" />
+
+        <activity
+            android:name=".ui.app.AppDetailActivity"
+            android:screenOrientation="portrait"/>
+    </application>
+
+</manifest>

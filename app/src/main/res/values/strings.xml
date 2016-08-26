@@ -1,0 +1,94 @@
+<resources>
+    <string name="ff.app.name">日拱一卒</string>
+    <string name="ff.splash.slogan">An android version Test Flight\nby using the testing app distribution\nservice provided by pgyer</string>
+    <string name="ff.splash.slogan.about">An android version Test Flight\nby using the testing app distribution service provided by pgyer</string>
+
+    <!-- Common -->
+    <string name="ff.no">No</string>
+    <string name="ff.yes">Yes</string>
+    <string name="ff.ok">OK</string>
+    <string name="ff.cancel">Cancel</string>
+    <string name="ff.confirm">Confirm</string>
+    <string name="ff.dismiss">Dismiss</string>
+    <string name="ff.close">Close</string>
+
+    <!-- Sign In -->
+    <string name="ff.signin.failed">Sign in failed</string>
+    <string name="ff.signin.menu_item.signin">Next</string>
+    <string name="ff.signin.email.hint">Email</string>
+    <string name="ff.signin.password.hint">Password</string>
+
+    <string name="ff.signin.email.example">fir.flight@fir.im</string>
+    <string name="ff.signin.password.example">******</string>
+
+    <!-- Main -->
+    <string name="ff.main.tab.apps">Apps</string>
+    <string name="ff.main.tab.messages">Messages</string>
+    <string name="ff.main.tab.profile">Profile</string>
+    <string name="ff.main.tab.tools">Tools</string>
+
+    <string-array name="ff_main_tab_titles">
+        <item>@string/ff.main.tab.apps</item>
+        <item>@string/ff.main.tab.tools</item>
+    </string-array>
+
+    <!-- Apps -->
+    <string name="ff.apps.update">Update</string>
+    <string name="ff.apps.open">Open</string>
+    <string name="ff.apps.install">Install</string>
+    <string name="ff.apps.empty">No apps found</string>
+
+    <!-- Messages -->
+    <string name="ff.messages.empty">No messages received</string>
+
+    <!-- Profile -->
+    <string name="ff.profile.menu.settings">Settings</string>
+    <string name="ff.profile.menu.about">About</string>
+    <string name="ff.profile.menu.sign_out">Sign Out</string>
+
+    <string name="ff.profile.api_token">Api Token</string>
+    <string name="ff.profile.api_token.description">可用于调用公开 API，可用于登录 fir-cli，\n可用于配置 BugHD 的 SDK，请勿泄露您的 token。</string>
+
+    <string name="ff.profile.button.refresh">Refresh</string>
+
+    <string name="ff.profile.copy_token">Copied token to clipboard\n%s</string>
+
+    <!-- About -->
+    <string name="ff.about">About</string>
+    <string name="ff.acknowledgements">Acknowledgements</string>
+    <string name="ff.about.button.fir">pgyer.com</string>
+    <string name="ff.about.button.acknowledgements">@string/ff.acknowledgements</string>
+    <string name="ff.about.button.author">© 2016 Android Team</string>
+
+    <!-- Settings -->
+    <string name="ff.settings">Settings</string>
+    <string name="ff.settings.section.cache">Cache</string>
+    <string name="ff.settings.section.updates">Updates</string>
+    <string name="ff.settings.section.terms">Terms</string>
+    <string name="ff.settings.section.updates.item.check">Check for Updates</string>
+    <string name="ff.settings.section.cache.item.clear_image">Clear image cache</string>
+    <string name="ff.settings.section.terms.item.agreements">Agreements</string>
+
+    <string name="ff.settings.message.cache_cleared">Image cache has been cleared</string>
+    <string name="ff.settings.message.coming_soon">Coming soon…</string>
+
+    <!-- WebView -->
+    <string name="ff.webview.menu.refresh">Refresh</string>
+    <string name="ff.webview.menu.copy_link">Copy Link</string>
+    <string name="ff.webview.menu.open_in_browser">Open in Browser</string>
+    <string name="ff.webview.menu.share">Share</string>
+
+    <string name="ff.webview.share_title">Share this page to</string>
+
+    <!-- Notification -->
+    <string name="ff.notification.app.new_version.message" formatted="false">New version %s(%s)</string>
+
+    <!-- Dialog -->
+    <string name="ff.dialog.sign_out.title">Sign out</string>
+    <string name="ff.dialog.sign_out.message">Sign out will clear all your local caches. Do you really want to sign out?</string>
+
+    <!-- Errors -->
+    <string name="ff.network.error.timeout">Request timeout</string>
+    <string name="ff.network.error.session_expired">Session expired,\nplease sign in again.</string>
+    <string name="ff.network.error.wrong_email_or_password">Incorrect email or password</string>
+</resources>

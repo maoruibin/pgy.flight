@@ -1,0 +1,38 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="ff.common.marginLeft">60dp</dimen>
+
+    <item name="ff.common.dialogWidth" type="dimen">67%</item>
+
+    <dimen name="ff.divider.height">0.1dp</dimen>
+    <dimen name="ff.divider.width">0.1dp</dimen>
+
+    <dimen name="ff.margin.small">8dp</dimen>
+    <dimen name="ff.margin.normal">12dp</dimen>
+    <dimen name="ff.margin.large">16dp</dimen>
+    <dimen name="ff.margin.larger">24dp</dimen>
+
+    <dimen name="ff.padding.small">4dp</dimen>
+    <dimen name="ff.padding.normal">8dp</dimen>
+    <dimen name="ff.padding.large">16dp</dimen>
+    <dimen name="ff.padding.larger">24dp</dimen>
+
+    <dimen name="ff.textSize.title">16sp</dimen>
+    <dimen name="ff.textSize.text">14sp</dimen>
+    <dimen name="ff.textSize.tips">12sp</dimen>
+    <dimen name="ff.textSize.button">11sp</dimen>
+
+    <dimen name="ff.app.icon.size">56dp</dimen>
+
+    <dimen name="ff.emptyView.marginBottom">64dp</dimen>
+
+    <!-- Splash -->
+    <dimen name="ff.splash.slogan.top">100dp</dimen>
+
+    <!-- Main -->
+    <dimen name="ff.main.tab.indicator.height">2dp</dimen>
+
+    <!-- Settings -->
+    <dimen name="ff.settings.item.minHeight">44dp</dimen>
+</resources>
