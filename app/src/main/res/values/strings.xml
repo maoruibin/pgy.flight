@@ -63,6 +63,7 @@
     <!-- Settings -->
     <string name="ff.settings">Settings</string>
     <string name="ff.settings.section.cache">Cache</string>
+    <string name="ff.settings.section.clear_download">Clear Download</string>
     <string name="ff.settings.section.updates">Updates</string>
     <string name="ff.settings.section.terms">Terms</string>
     <string name="ff.settings.section.updates.item.check">Check for Updates</string>
@@ -71,6 +72,9 @@
 
     <string name="ff.settings.message.cache_cleared">Image cache has been cleared</string>
     <string name="ff.settings.message.coming_soon">Coming soon…</string>
+
+    <!-- Detail -->
+    <string name="ff.detail.uninstall">uninstall</string>
 
     <!-- WebView -->
     <string name="ff.webview.menu.refresh">Refresh</string>

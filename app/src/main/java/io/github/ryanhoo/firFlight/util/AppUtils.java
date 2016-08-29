@@ -1,11 +1,15 @@
 package io.github.ryanhoo.firFlight.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+
 import io.github.ryanhoo.firFlight.data.model.App;
 import io.github.ryanhoo.firFlight.data.model.Release;
 import io.github.ryanhoo.firFlight.network.ServerConfig;
@@ -18,6 +22,7 @@ import io.github.ryanhoo.firFlight.network.ServerConfig;
  * Desc: AppUtils
  */
 public class AppUtils {
+    public static final int UNINSTALL_REQUEST_CODE = 1;
 
     private static final String TAG = "AppUtils";
 
@@ -70,5 +75,20 @@ public class AppUtils {
 
     public static String getAppUrlByShort(String shortUrl) {
         return String.format("%s/%s", ServerConfig.FIR_HOST, shortUrl);
+    }
+
+    public static void uninstallApp(Activity activity, String packageName){
+        Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+        intent.setData(Uri.parse("package:"+packageName));
+        intent.putExtra(Intent.EXTRA_RETURN_RESULT,true);
+        activity.startActivityForResult(intent,UNINSTALL_REQUEST_CODE);
+    }
+
+    public static boolean isAndroidApp(String type){
+        return 2 == Integer.parseInt(type);
+    }
+
+    public static boolean isIosApp(String type){
+        return 1 == Integer.parseInt(type);
     }
 }

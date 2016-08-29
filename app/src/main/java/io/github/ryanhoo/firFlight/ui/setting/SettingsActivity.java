@@ -2,15 +2,21 @@ package io.github.ryanhoo.firFlight.ui.setting;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+
+import java.io.File;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.bumptech.glide.Glide;
 import io.github.ryanhoo.firFlight.R;
 import io.github.ryanhoo.firFlight.ui.base.BaseActivity;
 
@@ -22,11 +28,14 @@ import io.github.ryanhoo.firFlight.ui.base.BaseActivity;
  * Desc: SettingsActivity
  */
 public class SettingsActivity extends BaseActivity {
+    private static File DOWNLOAD_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.text_view_image_cache)
     TextView textViewImageCache;
+    @Bind(R.id.text_view_clear_download)
+    TextView textViewClearDownload;
     @Bind(R.id.text_view_version)
     TextView textViewVersion;
 
@@ -38,11 +47,18 @@ public class SettingsActivity extends BaseActivity {
         supportActionBar(toolbar);
     }
 
-    @OnClick({R.id.layout_clear_image_cache, R.id.layout_check_updates, R.id.layout_agreements})
+    @OnClick({R.id.layout_clear_image_cache, R.id.layout_check_updates, R.id.layout_agreements,R.id.text_view_clear_download})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_clear_image_cache:
                 clearImageCache();
+                break;
+            case R.id.text_view_clear_download:
+                File[]list = DOWNLOAD_DIR.listFiles();
+                for(File file:list){
+                    file.delete();
+                }
+                Toast.makeText(SettingsActivity.this, "清除 "+DOWNLOAD_DIR.getName() +"成功", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.layout_check_updates:
                 checkForUpdates();

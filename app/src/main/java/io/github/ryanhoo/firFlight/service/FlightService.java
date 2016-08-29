@@ -8,16 +8,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
+
+import java.util.List;
+
 import io.github.ryanhoo.firFlight.R;
 import io.github.ryanhoo.firFlight.account.UserSession;
 import io.github.ryanhoo.firFlight.data.model.App;
-import io.github.ryanhoo.firFlight.data.model.AppPgy;
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
 import io.github.ryanhoo.firFlight.data.source.AppRepository;
-import io.github.ryanhoo.firFlight.ui.app.AppInfo;
 import io.github.ryanhoo.firFlight.ui.main.MainActivity;
 import rx.Subscriber;
-
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -52,7 +52,7 @@ public class FlightService extends IntentService {
 
         Log.d(TAG, "Start requesting apps...");
         AppRepository.getInstance().apps(true)
-                .subscribe(new Subscriber<List<AppEntity>>() {
+                .subscribe(new Subscriber<List<IAppBasic>>() {
                     @Override
                     public void onCompleted() {
                         Log.d(TAG, "Request apps completed");
@@ -65,8 +65,8 @@ public class FlightService extends IntentService {
                     }
 
                     @Override
-                    public void onNext(List<AppEntity> apps) {
-                        for (final AppEntity app : apps) {
+                    public void onNext(List<IAppBasic> apps) {
+                        for (final IAppBasic app : apps) {
 //                            AppInfo appInfo = new AppInfo(FlightService.this, app);
 //                            if (appInfo.isInstalled && !appInfo.isUpToDate) {
 //                                onAppNewVersion(app);

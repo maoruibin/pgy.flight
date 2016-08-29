@@ -1,14 +1,10 @@
 package io.github.ryanhoo.firFlight.data.source.remote;
 
-import java.util.List;
-
-import io.github.ryanhoo.firFlight.data.model.App;
-import io.github.ryanhoo.firFlight.data.model.AppDetail;
-import io.github.ryanhoo.firFlight.data.model.AppInstallInfo;
+import io.github.ryanhoo.firFlight.data.model.AppDetailModel;
 import io.github.ryanhoo.firFlight.data.model.AppPgy;
+import io.github.ryanhoo.firFlight.data.model.Bean;
 import io.github.ryanhoo.firFlight.data.source.AppContract;
 import io.github.ryanhoo.firFlight.data.source.remote.api.ApiService;
-import io.github.ryanhoo.firFlight.data.source.remote.api.RESTFulApiService;
 import rx.Observable;
 
 /**
@@ -33,7 +29,7 @@ public class RemoteAppDataSource implements AppContract.Remote {
     }
 
     @Override
-    public Observable<AppDetail> appView(String appKey) {
+    public Observable<Bean<AppDetailModel>> appView(String appKey) {
         return mApi.view(appKey,KEY_USER,KEY_API);
     }
 

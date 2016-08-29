@@ -15,21 +15,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.firFlight.R;
-import io.github.ryanhoo.firFlight.data.model.App;
-import io.github.ryanhoo.firFlight.data.model.AppEntity;
-import io.github.ryanhoo.firFlight.data.model.AppPgy;
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
 import io.github.ryanhoo.firFlight.data.source.AppRepository;
 import io.github.ryanhoo.firFlight.ui.base.BaseFragment;
 import io.github.ryanhoo.firFlight.ui.common.DefaultItemDecoration;
 import io.github.ryanhoo.firFlight.ui.helper.SwipeRefreshHelper;
-import io.github.ryanhoo.firFlight.util.AppUtils;
 import io.github.ryanhoo.firFlight.util.IntentUtils;
-import io.github.ryanhoo.firFlight.webview.WebViewHelper;
-
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -54,6 +51,7 @@ public class AppsFragment extends BaseFragment
     AppAdapter mAdapter;
 
     AppContract.Presenter mPresenter;
+
 
     @Nullable
     @Override
@@ -95,7 +93,7 @@ public class AppsFragment extends BaseFragment
     // MVP View
 
     @Override
-    public void onAppsLoaded(List<AppEntity> apps) {
+    public void onAppsLoaded(List<IAppBasic> apps) {
         mAdapter.setData(apps);
         mAdapter.notifyDataSetChanged();
     }
@@ -154,10 +152,12 @@ public class AppsFragment extends BaseFragment
 
     @Override
     public void onItemClick(int position) {
-        AppEntity app = mAdapter.getItem(position);
+        IAppBasic app = mAdapter.getItem(position);
         //WebViewHelper.openUrl(getActivity(), app.appName, AppUtils.getAppUrlByShort(app.appKey));
         Intent intent = new Intent(getActivity(),AppDetailActivity.class);
-        intent.putExtra(AppDetailActivity.KEY_APP,app.appKey);
+        intent.putExtra(AppDetailActivity.KEY_APP,app.getAppKey());
+        intent.putExtra(AppDetailActivity.KEY_APP_NAME,app.getAppName());
+        intent.putExtra(AppDetailActivity.KEY_APP_TYPE,app.getAppType());
         startActivity(intent);
     }
 
@@ -190,7 +190,7 @@ public class AppsFragment extends BaseFragment
         if (itemView instanceof AppItemView) {
             AppItemView appView = (AppItemView) itemView;
             if (appView.appInfo == null) return;
-            if (appView.appInfo.app == null || !appId.equals(appView.appInfo.app.appKey)) return;
+            if (appView.appInfo.app == null || !appId.equals(appView.appInfo.app.getAppKey())) return;
 
             mAdapter.onButtonProgress(appView);
         }

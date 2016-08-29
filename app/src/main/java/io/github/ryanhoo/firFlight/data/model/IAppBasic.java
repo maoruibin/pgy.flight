@@ -19,4 +19,6 @@ public interface IAppBasic {
     String getAppIdentifier();
 
     String getAppUpdateDescription();
+
+    String getAppType();
 }

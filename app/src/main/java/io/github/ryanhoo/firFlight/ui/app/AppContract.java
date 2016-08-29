@@ -2,13 +2,12 @@ package io.github.ryanhoo.firFlight.ui.app;
 
 import android.content.Context;
 import android.net.Uri;
-import io.github.ryanhoo.firFlight.data.model.App;
-import io.github.ryanhoo.firFlight.data.model.AppEntity;
-import io.github.ryanhoo.firFlight.data.model.AppPgy;
-import io.github.ryanhoo.firFlight.ui.base.BasePresenter;
-import io.github.ryanhoo.firFlight.ui.base.BaseView;
 
 import java.util.List;
+
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
+import io.github.ryanhoo.firFlight.ui.base.BasePresenter;
+import io.github.ryanhoo.firFlight.ui.base.BaseView;
 
 /**
  * Created with Android Studio.
@@ -26,7 +25,7 @@ interface AppContract {
 
         // Load apps
 
-        void onAppsLoaded(List<AppEntity> apps);
+        void onAppsLoaded(List<IAppBasic> apps);
 
         void onLoadAppStarted();
 

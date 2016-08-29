@@ -1,17 +1,18 @@
 package io.github.ryanhoo.firFlight.data.source;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.github.ryanhoo.firFlight.data.Injection;
-import io.github.ryanhoo.firFlight.data.model.AppDetail;
+import io.github.ryanhoo.firFlight.data.model.AppDetailModel;
 import io.github.ryanhoo.firFlight.data.model.AppEntity;
 import io.github.ryanhoo.firFlight.data.model.AppPgy;
+import io.github.ryanhoo.firFlight.data.model.Bean;
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
 import io.github.ryanhoo.firFlight.data.source.local.LocalAppDataSource;
 import io.github.ryanhoo.firFlight.data.source.remote.RemoteAppDataSource;
 import rx.Observable;
-import rx.functions.Action1;
 import rx.functions.Func1;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -44,42 +45,41 @@ public class AppRepository implements AppContract {
     }
 
     @Override
-    public Observable<List<AppEntity>> apps() {
+    public Observable<List<IAppBasic>> apps() {
         return apps(false);
     }
 
     @Override
-    public Observable<List<AppEntity>> appView(String appKey) {
-        return  mRemoteDataSourcePgy.appView(appKey).map(new Func1<AppDetail, List<AppEntity>>() {
-            @Override
-            public List<AppEntity> call(AppDetail appDetail) {
-                return new ArrayList<AppEntity>();
-            }
-        });
+    public Observable<AppDetailModel> appView(String appKey) {
+        return  mRemoteDataSourcePgy.appView(appKey)
+                .filter(new Func1<Bean<AppDetailModel>, Boolean>() {
+                    @Override
+                    public Boolean call(Bean<AppDetailModel> appDetailModelBean) {
+                        return appDetailModelBean.code == 0;
+                    }
+                })
+                .map(new Func1<Bean<AppDetailModel>, AppDetailModel>() {
+                    @Override
+                    public AppDetailModel call(Bean<AppDetailModel> appDetailModelBean) {
+                        return appDetailModelBean.data;
+                    }
+                });
     }
 
     @Override
-    public Observable<List<AppEntity>> apps(boolean forceUpdate) {
+    public Observable<List<IAppBasic>> apps(boolean forceUpdate) {
         //Observable<List<AppEntity>> local = mLocalDataSource.apps();
-        Observable<List<AppEntity>>remote = mRemoteDataSourcePgy.apps().map(new Func1<AppPgy, List<AppEntity>>() {
+        Observable<List<IAppBasic>>remote = mRemoteDataSourcePgy.apps().map(new Func1<AppPgy, List<IAppBasic>>() {
             @Override
-            public List<AppEntity> call(AppPgy appPgy) {
+            public List<IAppBasic> call(AppPgy appPgy) {
                 List<AppEntity> list = appPgy.data.list;
-                List<AppEntity> finalAndroidAppList = new ArrayList<AppEntity>();
+                List<IAppBasic> finalAndroidAppList = new ArrayList<IAppBasic>();
                 for(AppEntity app:list ){
-                    if(app.isAndroidApp()){
-                        finalAndroidAppList.add(app);
-                    }
+                    finalAndroidAppList.add(app);
                 }
                 return finalAndroidAppList;
             }
-        }).doOnNext(new Action1<List<AppEntity>>() {
-            @Override
-            public void call(List<AppEntity> apps) {
-                //mLocalDataSource.deleteAll();
-               // mLocalDataSource.save(apps);
-            }
-        });;
+        });
 
         if (forceUpdate) {
             return remote;

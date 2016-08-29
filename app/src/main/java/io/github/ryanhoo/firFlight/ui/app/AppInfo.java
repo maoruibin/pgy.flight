@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
-import io.github.ryanhoo.firFlight.data.model.App;
-import io.github.ryanhoo.firFlight.data.model.AppEntity;
-import io.github.ryanhoo.firFlight.data.model.AppPgy;
-import io.github.ryanhoo.firFlight.data.model.Release;
+
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
 
 /**
  * Created with Android Studio.
@@ -29,12 +27,12 @@ public class AppInfo {
 
     public Intent launchIntent;
 
-    public AppEntity app;
+    public IAppBasic app;
 
-    public AppInfo(Context context, AppEntity app) {
+    public AppInfo(Context context, IAppBasic app) {
         this.app = app;
-        String packageName = app.appIdentifier;
-        String build = app.appBuildVersion;
+        String packageName = app.getAppIdentifier();
+        String build = app.getAppBuildVersion();
         try {
             PackageManager packageManager = context.getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(packageName, PackageManager.GET_META_DATA);
@@ -55,7 +53,7 @@ public class AppInfo {
         } catch (PackageManager.NameNotFoundException ignore) {
             // It means app is not installed, no need to throw or log out errors
         } catch (Exception e) {
-            Log.w(TAG, String.format("isAppUpToDate %s: [%s, %s]", app.appName, packageName, build), e);
+            Log.w(TAG, String.format("isAppUpToDate %s: [%s, %s]", app.getAppName(), packageName, build), e);
         }
     }
 }

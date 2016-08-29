@@ -56,6 +56,20 @@
 
             <View style="@style/FFDivider"/>
 
+            <RelativeLayout
+                android:id="@+id/layout_clear_download"
+                style="@style/FFLayout.Settings.Item"
+                >
+
+                <TextView
+                    android:id="@+id/text_view_clear_download"
+                    style="@style/FFTextAppearance.Settings.ItemTitle"
+                    android:text="@string/ff.settings.section.clear_download"
+                    />
+            </RelativeLayout>
+
+            <View style="@style/FFDivider"/>
+
             <TextView
                 style="@style/FFTextAppearance.Settings.Section"
                 android:layout_marginTop="@dimen/ff.margin.normal"

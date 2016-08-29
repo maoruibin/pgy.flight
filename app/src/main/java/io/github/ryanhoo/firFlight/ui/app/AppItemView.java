@@ -7,15 +7,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.bumptech.glide.Glide;
 import io.github.ryanhoo.firFlight.R;
-import io.github.ryanhoo.firFlight.data.model.App;
-import io.github.ryanhoo.firFlight.data.model.AppEntity;
-import io.github.ryanhoo.firFlight.data.model.AppPgy;
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
 import io.github.ryanhoo.firFlight.ui.common.adapter.IAdapterView;
 import io.github.ryanhoo.firFlight.ui.common.widget.CharacterDrawable;
+import io.github.ryanhoo.firFlight.util.AppUtils;
 
 /**
  * Created with Android Studio.
@@ -25,7 +26,7 @@ import io.github.ryanhoo.firFlight.ui.common.widget.CharacterDrawable;
  * Desc: AppItemView
  */
 
-public class AppItemView extends RelativeLayout implements IAdapterView<AppEntity> {
+public class AppItemView extends RelativeLayout implements IAdapterView<IAppBasic> {
 
     Context mContext;
     @Bind(R.id.image_view_icon)
@@ -56,19 +57,19 @@ public class AppItemView extends RelativeLayout implements IAdapterView<AppEntit
     }
 
     @Override
-    public void bind(AppEntity app, int position) {
+    public void bind(IAppBasic app, int position) {
         appInfo = new AppInfo(mContext, app);
 
         Glide.with(mContext)
-                .load("http://o1wh05aeh.qnssl.com/image/view/app_icons/"+app.appIcon)
-                .placeholder(CharacterDrawable.create(mContext, app.appName.charAt(0), false, R.dimen.ff_padding_large))
+                .load("http://o1wh05aeh.qnssl.com/image/view/app_icons/"+app.getAppIcon())
+                .placeholder(CharacterDrawable.create(mContext, app.getAppName().charAt(0), false, R.dimen.ff_padding_large))
                 .into(imageView);
-        textViewName.setText(app.appName);
+        textViewName.setText(app.getAppName());
         textViewVersion.setText(String.format("%s(%s)",
-                app.appVersion,
-                app.appBuildVersion
+                app.getAppVersion(),
+                app.getAppBuildVersion()
         ));
-        textViewBundleId.setText(app.appIdentifier);
+        textViewBundleId.setText(app.getAppIdentifier());
 
         // Hide old version when app is not installed or already up-to-date
         textViewLocalVersion.setVisibility(
@@ -77,7 +78,7 @@ public class AppItemView extends RelativeLayout implements IAdapterView<AppEntit
             textViewLocalVersion.setText(String.format("%s(%s)",
                     appInfo.localVersionName, appInfo.localVersionCode));
         }
-        boolean isAndroidApp = app.isAndroidApp();
+        boolean isAndroidApp = AppUtils.isAndroidApp(app.getAppType());
         buttonAction.setVisibility(isAndroidApp ? View.VISIBLE : View.GONE);
         layoutIOSBadge.setVisibility(isAndroidApp ? View.GONE : View.VISIBLE);
     }

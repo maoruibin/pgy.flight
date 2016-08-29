@@ -3,8 +3,11 @@ package io.github.ryanhoo.firFlight.ui.app;
 import android.net.Uri;
 import android.os.Environment;
 
-import io.github.ryanhoo.firFlight.data.model.AppEntity;
-import io.github.ryanhoo.firFlight.data.model.AppPgy;
+import java.io.File;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
 import io.github.ryanhoo.firFlight.data.source.AppRepository;
 import io.github.ryanhoo.firFlight.data.source.remote.RemoteAppDataSource;
 import io.github.ryanhoo.firFlight.network.NetworkSubscriber;
@@ -15,10 +18,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
-import java.io.File;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created with Android Studio.
@@ -58,14 +57,14 @@ import java.util.concurrent.TimeUnit;
         Subscription subscription = mRepository.apps()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true)
-                .subscribe(new NetworkSubscriber<List<AppEntity>>(mView.getContext()) {
+                .subscribe(new NetworkSubscriber<List<IAppBasic>>(mView.getContext()) {
                     @Override
                     public void onStart() {
                         mView.onLoadAppStarted();
                     }
 
                     @Override
-                    public void onNext(List<AppEntity> apps) {
+                    public void onNext(List<IAppBasic> apps) {
                         mView.onAppsLoaded(apps);
                     }
 
@@ -80,11 +79,11 @@ import java.util.concurrent.TimeUnit;
     @Override
     public void requestInstallUrl(final AppItemView itemView, final int position) {
         final AppInfo appInfo = itemView.appInfo;
-        final AppEntity app = appInfo.app;
+        final IAppBasic app = appInfo.app;
         Subscription subscription = Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext(RemoteAppDataSource.makeDownloadUrl(app.appKey));
+                subscriber.onNext(RemoteAppDataSource.makeDownloadUrl(app.getAppKey()));
                 subscriber.onCompleted();
             }
         })
@@ -92,7 +91,7 @@ import java.util.concurrent.TimeUnit;
                     @Override
                     public Observable<AppDownloadTask.DownloadInfo> call(String downloadUrl) {
                         AppDownloadTask task = new AppDownloadTask(downloadUrl);
-                        mView.addTask(app.appKey, task);
+                        mView.addTask(app.getAppKey(), task);
                         return task.downloadApk(DOWNLOAD_DIR);
                     }
                 })
@@ -108,7 +107,7 @@ import java.util.concurrent.TimeUnit;
 
                     @Override
                     public void onNext(AppDownloadTask.DownloadInfo info) {
-                        mView.updateAppInfo(app.appKey, position);
+                        mView.updateAppInfo(app.getAppKey(), position);
                         if (info.progress == 1f) {
                             mView.installApk(Uri.fromFile(info.apkFile));
                         }
@@ -116,7 +115,7 @@ import java.util.concurrent.TimeUnit;
 
                     @Override
                     public void onUnsubscribe() {
-                        mView.removeTask(app.appKey);
+                        mView.removeTask(app.getAppKey());
                         itemView.buttonAction.setEnabled(true);
                     }
                 });

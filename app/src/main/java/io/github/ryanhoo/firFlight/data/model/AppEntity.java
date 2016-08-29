@@ -12,7 +12,13 @@ public class AppEntity extends AppLite {
     public String appDescription;
     public String appScreenshots;
 
-    public boolean isAndroidApp(){
-        return 2 == Integer.parseInt(appType);
+    @Override
+    public String getAppIcon() {
+        return appIcon;
+    }
+
+    @Override
+    public String getAppType() {
+        return appType;
     }
 }

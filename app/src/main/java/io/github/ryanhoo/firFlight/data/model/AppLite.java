@@ -22,31 +22,36 @@ public class AppLite implements IAppBasic{
 
     @Override
     public String getAppKey() {
-        return null;
+        return appKey;
     }
 
     @Override
     public String getAppName() {
-        return null;
+        return appName;
     }
 
     @Override
     public String getAppVersion() {
-        return null;
+        return appVersion;
     }
 
     @Override
     public String getAppBuildVersion() {
-        return null;
+        return appBuildVersion;
     }
 
     @Override
     public String getAppIdentifier() {
-        return null;
+        return appIdentifier;
     }
 
     @Override
     public String getAppUpdateDescription() {
-        return null;
+        return appUpdateDescription;
+    }
+
+    @Override
+    public String getAppType() {
+        return 2+"";
     }
 }

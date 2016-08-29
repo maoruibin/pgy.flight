@@ -1,22 +1,13 @@
 package io.github.ryanhoo.firFlight.data.source.remote.api;
 
-import java.util.List;
-
-import io.github.ryanhoo.firFlight.data.model.App;
-import io.github.ryanhoo.firFlight.data.model.AppDetail;
-import io.github.ryanhoo.firFlight.data.model.AppInstallInfo;
+import io.github.ryanhoo.firFlight.data.model.AppDetailModel;
 import io.github.ryanhoo.firFlight.data.model.AppPgy;
-import io.github.ryanhoo.firFlight.data.model.Message;
+import io.github.ryanhoo.firFlight.data.model.Bean;
 import io.github.ryanhoo.firFlight.data.model.Token;
-import io.github.ryanhoo.firFlight.data.model.User;
-import io.github.ryanhoo.firFlight.network.MultiPageResponse;
-import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -46,6 +37,6 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("/apiv1/app/view")
-    Observable<AppDetail> view(@Field("aKey") String aKey, @Field("uKey") String uKey, @Field("_api_key") String _api_key);
+    Observable<Bean<AppDetailModel>> view(@Field("aKey") String aKey, @Field("uKey") String uKey, @Field("_api_key") String _api_key);
 
 }

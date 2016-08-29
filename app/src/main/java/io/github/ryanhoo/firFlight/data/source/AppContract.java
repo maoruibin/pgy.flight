@@ -1,13 +1,13 @@
 package io.github.ryanhoo.firFlight.data.source;
 
-import io.github.ryanhoo.firFlight.data.model.App;
-import io.github.ryanhoo.firFlight.data.model.AppDetail;
-import io.github.ryanhoo.firFlight.data.model.AppEntity;
-import io.github.ryanhoo.firFlight.data.model.AppInstallInfo;
-import io.github.ryanhoo.firFlight.data.model.AppPgy;
-import rx.Observable;
-
 import java.util.List;
+
+import io.github.ryanhoo.firFlight.data.model.AppDetailModel;
+import io.github.ryanhoo.firFlight.data.model.AppEntity;
+import io.github.ryanhoo.firFlight.data.model.AppPgy;
+import io.github.ryanhoo.firFlight.data.model.Bean;
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
+import rx.Observable;
 
 /**
  * Created with Android Studio.
@@ -37,13 +37,13 @@ public interface AppContract {
 
         Observable<AppPgy> apps();
 
-        Observable<AppDetail> appView(String appKey);
+        Observable<Bean<AppDetailModel>> appView(String appKey);
     }
 
-    Observable<List<AppEntity>> apps();
+    Observable<List<IAppBasic>> apps();
 
-    Observable<List<AppEntity>> appView(String appKey);
+    Observable<AppDetailModel> appView(String appKey);
 
-    Observable<List<AppEntity>> apps(boolean forceUpdate);
+    Observable<List<IAppBasic>> apps(boolean forceUpdate);
 
 }

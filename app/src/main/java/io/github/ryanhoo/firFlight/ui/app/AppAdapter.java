@@ -6,16 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import io.github.ryanhoo.firFlight.R;
-import io.github.ryanhoo.firFlight.data.model.App;
-import io.github.ryanhoo.firFlight.data.model.AppEntity;
-import io.github.ryanhoo.firFlight.data.model.AppPgy;
-import io.github.ryanhoo.firFlight.ui.common.adapter.ListAdapter;
-import io.github.ryanhoo.firFlight.ui.common.adapter.OnItemClickListener;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import io.github.ryanhoo.firFlight.R;
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
+import io.github.ryanhoo.firFlight.ui.common.adapter.ListAdapter;
+import io.github.ryanhoo.firFlight.ui.common.adapter.OnItemClickListener;
 
 /**
  * Created with Android Studio.
@@ -24,12 +23,12 @@ import java.util.Map;
  * Time: 10:48 PM
  * Desc: AppAdapterV2
  */
-/* package */ class AppAdapter extends ListAdapter<AppEntity, AppItemView> {
+/* package */ class AppAdapter extends ListAdapter<IAppBasic, AppItemView> {
 
     private Map<String, AppDownloadTask> mTasks;
     private AppItemClickListener mItemClickListener;
 
-    /* package */ AppAdapter(Context context, List<AppEntity> data) {
+    /* package */ AppAdapter(Context context, List<IAppBasic> data) {
         super(context, data);
         mTasks = new HashMap<>();
     }
@@ -59,11 +58,11 @@ import java.util.Map;
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         if (holder.itemView instanceof AppItemView) {
-            AppEntity app = getItem(position);
+            IAppBasic app = getItem(position);
             AppItemView itemView = (AppItemView) holder.itemView;
 
-            if (mTasks.containsKey(app.appKey)) {
-                AppDownloadTask.DownloadInfo downloadInfo = mTasks.get(app.appKey).getDownloadInfo();
+            if (mTasks.containsKey(app.getAppKey())) {
+                AppDownloadTask.DownloadInfo downloadInfo = mTasks.get(app.getAppKey()).getDownloadInfo();
                 // Has downloading task, show progress
                 itemView.buttonAction.setText(String.format("%d%%", (int) (downloadInfo.progress * 100)));
                 itemView.buttonAction.setEnabled(false);
@@ -87,9 +86,9 @@ import java.util.Map;
 
     @SuppressLint("DefaultLocale")
     /* package */ void onButtonProgress(@NonNull AppItemView appItemView) {
-        AppEntity app = appItemView.appInfo.app;
-        if (mTasks.containsKey(app.appKey)) {
-            AppDownloadTask.DownloadInfo downloadInfo = mTasks.get(app.appKey).getDownloadInfo();
+        IAppBasic app = appItemView.appInfo.app;
+        if (mTasks.containsKey(app.getAppKey())) {
+            AppDownloadTask.DownloadInfo downloadInfo = mTasks.get(app.getAppKey()).getDownloadInfo();
             appItemView.buttonAction.setText(String.format("%d%%", (int) (downloadInfo.progress * 100)));
         }
     }
