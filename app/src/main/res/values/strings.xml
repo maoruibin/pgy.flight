@@ -25,11 +25,11 @@
     <string name="ff.main.tab.apps">Apps</string>
     <string name="ff.main.tab.messages">Messages</string>
     <string name="ff.main.tab.profile">Profile</string>
-    <string name="ff.main.tab.tools">Tools</string>
+    <string name="ff.main.tab.today">Today</string>
 
     <string-array name="ff_main_tab_titles">
         <item>@string/ff.main.tab.apps</item>
-        <item>@string/ff.main.tab.tools</item>
+        <item>@string/ff.main.tab.today</item>
     </string-array>
 
     <!-- Apps -->

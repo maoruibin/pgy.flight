@@ -9,25 +9,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.firFlight.R;
-import io.github.ryanhoo.firFlight.RxBus;
-import io.github.ryanhoo.firFlight.event.SignOutEvent;
 import io.github.ryanhoo.firFlight.ui.about.AboutActivity;
 import io.github.ryanhoo.firFlight.ui.app.AppsFragment;
 import io.github.ryanhoo.firFlight.ui.base.BaseActivity;
 import io.github.ryanhoo.firFlight.ui.base.BaseFragment;
-import io.github.ryanhoo.firFlight.ui.message.MessagesFragment;
-import io.github.ryanhoo.firFlight.ui.profile.ProfileFragment;
 import io.github.ryanhoo.firFlight.ui.setting.SettingsActivity;
-import io.github.ryanhoo.firFlight.ui.tools.ToolsFragment;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import io.github.ryanhoo.firFlight.ui.tools.TadayFragment;
 
 /**
  * Created with Android Studio.
@@ -61,7 +53,7 @@ public class MainActivity extends BaseActivity {
         final String[] tabTitles = getResources().getStringArray(R.array.ff_main_tab_titles);
         final BaseFragment[] fragments = new BaseFragment[tabTitles.length];
         fragments[0] = new AppsFragment();
-        fragments[1] = new ToolsFragment();
+        fragments[1] = new TadayFragment();
 
         MainTabAdapter adapter = new MainTabAdapter(getSupportFragmentManager(), tabTitles, fragments);
         viewPager.setAdapter(adapter);
