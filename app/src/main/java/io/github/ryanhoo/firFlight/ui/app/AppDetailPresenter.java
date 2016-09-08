@@ -2,6 +2,7 @@ package io.github.ryanhoo.firFlight.ui.app;
 
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import io.github.ryanhoo.firFlight.data.model.IAppBasic;
 import io.github.ryanhoo.firFlight.data.source.AppRepository;
 import io.github.ryanhoo.firFlight.data.source.remote.RemoteAppDataSource;
 import io.github.ryanhoo.firFlight.network.NetworkSubscriber;
-import io.github.ryanhoo.firFlight.ui.base.BaseActivity;
 import io.github.ryanhoo.firFlight.util.AppUtils;
 import io.github.ryanhoo.firFlight.util.WarpUtils;
 import rx.Observable;
@@ -59,10 +59,11 @@ public class AppDetailPresenter implements AppDetailContract.Presenter {
                     public void onNext(AppDetailModel appDetail) {
                         detailModel = appDetail;
                         List<IAppBasic> list = new ArrayList<IAppBasic>();
+                        list.add(appDetail);
                         for(AppLite app:appDetail.otherapps){
                             list.add(WarpUtils.warpAppLite(appDetail,app));
                         }
-                        mView.onFillHistList(list);
+                        mView.onAppListLoaded(list);
                     }
 
                     @Override
@@ -71,6 +72,11 @@ public class AppDetailPresenter implements AppDetailContract.Presenter {
                     }
                 });
         mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void uninstall() {
+        AppUtils.uninstallApp((AppCompatActivity)mView.getContext(),detailModel.appIdentifier);
     }
 
     @Override
@@ -87,7 +93,7 @@ public class AppDetailPresenter implements AppDetailContract.Presenter {
                 .flatMap(new Func1<String, Observable<AppDownloadTask.DownloadInfo>>() {
                     @Override
                     public Observable<AppDownloadTask.DownloadInfo> call(String downloadUrl) {
-                        AppDownloadTask task = new AppDownloadTask(downloadUrl);
+                        AppDownloadTask task = new AppDownloadTask(downloadUrl,AppUtils.formatApkName(app));
                         mView.addTask(app.getAppKey(), task);
                         return task.downloadApk(DOWNLOAD_DIR);
                     }
@@ -129,8 +135,4 @@ public class AppDetailPresenter implements AppDetailContract.Presenter {
 
     }
 
-    @Override
-    public void uninstall() {
-        AppUtils.uninstallApp((BaseActivity)mView.getContext(),detailModel.appIdentifier);
-    }
 }

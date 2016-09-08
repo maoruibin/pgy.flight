@@ -33,9 +33,9 @@
     </string-array>
 
     <!-- Apps -->
-    <string name="ff.apps.update">Update</string>
-    <string name="ff.apps.open">Open</string>
-    <string name="ff.apps.install">Install</string>
+    <string name="ff.apps.update">更新</string>
+    <string name="ff.apps.open">打开</string>
+    <string name="ff.apps.install">安装</string>
     <string name="ff.apps.empty">No apps found</string>
 
     <!-- Messages -->

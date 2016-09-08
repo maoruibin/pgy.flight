@@ -8,9 +8,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.File;
+
 import io.github.ryanhoo.firFlight.data.model.App;
+import io.github.ryanhoo.firFlight.data.model.IAppBasic;
 import io.github.ryanhoo.firFlight.data.model.Release;
 import io.github.ryanhoo.firFlight.network.ServerConfig;
 
@@ -22,13 +26,17 @@ import io.github.ryanhoo.firFlight.network.ServerConfig;
  * Desc: AppUtils
  */
 public class AppUtils {
+    private static File DOWNLOAD_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
     public static final int UNINSTALL_REQUEST_CODE = 1;
 
     private static final String TAG = "AppUtils";
 
-    public static boolean isAppInstalled(Context context, App app) {
-        Release onlineRelease = app.getMasterRelease();
-        String packageName = app.getBundleId();
+    public static boolean isAppInstalled(Context context, IAppBasic app) {
+        String packageName = app.getAppIdentifier();
+        return isAppInstalled(context,packageName);
+    }
+
+    public static boolean isAppInstalled(Context context,String packageName){
         try {
             PackageInfo packageInfo = context.getPackageManager()
                     .getPackageInfo(packageName, PackageManager.GET_META_DATA);
@@ -77,18 +85,26 @@ public class AppUtils {
         return String.format("%s/%s", ServerConfig.FIR_HOST, shortUrl);
     }
 
-    public static void uninstallApp(Activity activity, String packageName){
+    public static void uninstallApp(Activity activity, String packageName) {
         Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
-        intent.setData(Uri.parse("package:"+packageName));
-        intent.putExtra(Intent.EXTRA_RETURN_RESULT,true);
-        activity.startActivityForResult(intent,UNINSTALL_REQUEST_CODE);
+        intent.setData(Uri.parse("package:" + packageName));
+        intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+        activity.startActivityForResult(intent, UNINSTALL_REQUEST_CODE);
     }
 
-    public static boolean isAndroidApp(String type){
+    public static boolean isAndroidApp(String type) {
         return 2 == Integer.parseInt(type);
     }
 
-    public static boolean isIosApp(String type){
+    public static boolean isIosApp(String type) {
         return 1 == Integer.parseInt(type);
+    }
+
+    public static String formatApkName(IAppBasic app){
+        return app.getAppName()+"_"+app.getAppKey().concat(".apk");
+    }
+
+    public static File getInstalledApkFile(IAppBasic app){
+        return new File(DOWNLOAD_DIR,formatApkName(app));
     }
 }

@@ -27,11 +27,11 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
 
-        <item name="colorAccent">@color/colorAccentHolo</item>
-        <item name="android:textColorPrimary">@color/textColorPrimaryHolo</item>
-        <item name="android:textColorSecondary">@color/textColorSecondaryHolo</item>
+        <item name="colorAccent">@color/ff.theme.light.dark_blue.colorPrimary</item>
+        <item name="android:textColorPrimary">@color/ff.theme.light.dark_blue.colorPrimary</item>
+        <item name="android:textColorSecondary">@color/ff.theme.light.dark_blue.colorPrimaryDark</item>
 
-        <item name="android:windowBackground">@color/ff.splash.background</item>
+        <item name="android:windowBackground">@color/ff.theme.light.dark_blue.colorPrimary</item>
 
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>
@@ -56,6 +56,13 @@
 
         <item name="android:windowBackground">@color/ff.splash.background</item>
 
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    </style>
+
+    <style name="FFTheme.Detail">
+        <item name="colorPrimary">@color/ff.theme.light.dark_blue.colorPrimary</item>
+        <item name="colorPrimaryDark">@color/ff.theme.light.dark_blue.colorPrimaryDark</item>
+        <item name="colorAccent">@color/ff.theme.light.dark_blue.colorPrimary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 
@@ -200,5 +207,14 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/ff.settings.item.minHeight</item>
         <item name="android:background">@color/ff.white</item>
+    </style>
+
+    <style name="Toolbar.Dark" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/ff.white</item>
+        <item name="android:textColorPrimary">@color/ff.white</item>
+    </style>
+
+    <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/transparent</item>
     </style>
 </resources>

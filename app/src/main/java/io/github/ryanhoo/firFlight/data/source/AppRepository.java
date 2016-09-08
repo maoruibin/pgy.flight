@@ -51,7 +51,7 @@ public class AppRepository implements AppContract {
 
     @Override
     public Observable<AppDetailModel> appView(String appKey) {
-        return  mRemoteDataSourcePgy.appView(appKey)
+        return mRemoteDataSourcePgy.appView(appKey)
                 .filter(new Func1<Bean<AppDetailModel>, Boolean>() {
                     @Override
                     public Boolean call(Bean<AppDetailModel> appDetailModelBean) {
@@ -69,22 +69,41 @@ public class AppRepository implements AppContract {
     @Override
     public Observable<List<IAppBasic>> apps(boolean forceUpdate) {
         //Observable<List<AppEntity>> local = mLocalDataSource.apps();
-        Observable<List<IAppBasic>>remote = mRemoteDataSourcePgy.apps().map(new Func1<AppPgy, List<IAppBasic>>() {
-            @Override
-            public List<IAppBasic> call(AppPgy appPgy) {
-                List<AppEntity> list = appPgy.data.list;
-                List<IAppBasic> finalAndroidAppList = new ArrayList<IAppBasic>();
-                for(AppEntity app:list ){
-                    finalAndroidAppList.add(app);
-                }
-                return finalAndroidAppList;
-            }
-        });
+        Observable<List<IAppBasic>> remote = mRemoteDataSourcePgy.apps()
+                .map(new Func1<AppPgy, List<IAppBasic>>() {
+                    @Override
+                    public List<IAppBasic> call(AppPgy appPgy) {
+                        List<AppEntity> list = appPgy.data.list;
+                        List<IAppBasic> finalAndroidAppList = new ArrayList<IAppBasic>();
+                        for (AppEntity app : list) {
+                            finalAndroidAppList.add(app);
+                        }
+                        return finalAndroidAppList;
+                    }
+                });
 
         if (forceUpdate) {
             return remote;
         }
         return remote;
         //return Observable.concat(local.first(), remote);
+    }
+
+    @Override
+    public Observable<List<IAppBasic>> filterToday() {
+        Observable<List<IAppBasic>> remote = mRemoteDataSourcePgy.apps().map(new Func1<AppPgy, List<IAppBasic>>() {
+            @Override
+            public List<IAppBasic> call(AppPgy appPgy) {
+                List<AppEntity> list = appPgy.data.list;
+                List<IAppBasic> finalAndroidAppList = new ArrayList<IAppBasic>();
+                for (AppEntity app : list) {
+//                    if(DateUtils.isToday(app.appCreated)){
+//                        finalAndroidAppList.add(app);
+//                    }
+                }
+                return finalAndroidAppList;
+            }
+        });
+        return remote;
     }
 }

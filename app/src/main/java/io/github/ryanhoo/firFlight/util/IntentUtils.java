@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
+import java.io.File;
+
 /**
  * Created with Android Studio.
  * User: ryan.hoo.j@gmail.com
@@ -17,5 +19,9 @@ public class IntentUtils {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(uri, "application/vnd.android.package-archive");
         context.startActivity(intent);
+    }
+
+    public static void install(Context context, File file) {
+        install(context, Uri.fromFile(file));
     }
 }

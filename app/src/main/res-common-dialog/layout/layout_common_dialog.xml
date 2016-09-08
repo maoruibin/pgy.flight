@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:indeterminateDrawable="@drawable/common_dialog_animated_spinner"
-            android:indeterminateDuration="800"
+            android:indeterminateDuration="500"
             tools:visibility="visible"
             />
     </FrameLayout>

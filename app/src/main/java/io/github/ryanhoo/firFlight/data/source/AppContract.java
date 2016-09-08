@@ -46,4 +46,6 @@ public interface AppContract {
 
     Observable<List<IAppBasic>> apps(boolean forceUpdate);
 
+    Observable<List<IAppBasic>> filterToday();
+
 }

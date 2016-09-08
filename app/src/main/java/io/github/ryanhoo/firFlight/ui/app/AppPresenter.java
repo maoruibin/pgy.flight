@@ -11,6 +11,7 @@ import io.github.ryanhoo.firFlight.data.model.IAppBasic;
 import io.github.ryanhoo.firFlight.data.source.AppRepository;
 import io.github.ryanhoo.firFlight.data.source.remote.RemoteAppDataSource;
 import io.github.ryanhoo.firFlight.network.NetworkSubscriber;
+import io.github.ryanhoo.firFlight.util.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -34,16 +35,18 @@ import rx.subscriptions.CompositeSubscription;
     private AppContract.View mView;
     private CompositeSubscription mSubscriptions;
 
+
     /* package */ AppPresenter(AppRepository repository, AppContract.View view) {
         mRepository = repository;
         mView = view;
         mView.setPresenter(this);
         mSubscriptions = new CompositeSubscription();
+
     }
 
     @Override
     public void subscribe() {
-        loadApps();
+        loadAppList();
     }
 
     @Override
@@ -53,7 +56,7 @@ import rx.subscriptions.CompositeSubscription;
     }
 
     @Override
-    public void loadApps() {
+    public void loadAppList() {
         Subscription subscription = mRepository.apps()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread(), true)
@@ -65,7 +68,7 @@ import rx.subscriptions.CompositeSubscription;
 
                     @Override
                     public void onNext(List<IAppBasic> apps) {
-                        mView.onAppsLoaded(apps);
+                        mView.onAppListLoaded(apps);
                     }
 
                     @Override
@@ -75,6 +78,7 @@ import rx.subscriptions.CompositeSubscription;
                 });
         mSubscriptions.add(subscription);
     }
+
 
     @Override
     public void requestInstallUrl(final AppItemView itemView, final int position) {
@@ -90,7 +94,7 @@ import rx.subscriptions.CompositeSubscription;
                 .flatMap(new Func1<String, Observable<AppDownloadTask.DownloadInfo>>() {
                     @Override
                     public Observable<AppDownloadTask.DownloadInfo> call(String downloadUrl) {
-                        AppDownloadTask task = new AppDownloadTask(downloadUrl);
+                        AppDownloadTask task = new AppDownloadTask(downloadUrl, AppUtils.formatApkName(app));
                         mView.addTask(app.getAppKey(), task);
                         return task.downloadApk(DOWNLOAD_DIR);
                     }
@@ -121,4 +125,5 @@ import rx.subscriptions.CompositeSubscription;
                 });
         mSubscriptions.add(subscription);
     }
+
 }

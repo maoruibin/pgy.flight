@@ -3,12 +3,17 @@ package io.github.ryanhoo.firFlight.ui.app;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
-import rx.Observable;
-import rx.Subscriber;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Created with Android Studio.
@@ -24,10 +29,12 @@ import java.net.URL;
     private static final int BUFFER_SIZE = 16 * 1024;
 
     private String mUrl;
+    private String mApkFileName;
     private DownloadInfo mDownloadInfo;
 
-    /* package */ AppDownloadTask(String url) {
+    /* package */ AppDownloadTask(String url,String apkFileName) {
         mUrl = url;
+        mApkFileName = apkFileName;
         mDownloadInfo = new DownloadInfo();
     }
 
@@ -49,8 +56,8 @@ import java.net.URL;
                     Log.d(TAG, "Start downloading " + urlConnection.getURL());
                     Log.d(TAG, String.format("File size %.2f kb", (float) contentLength / 1024));
 
-                    String fileName = getFileName(urlConnection);
-                    mDownloadInfo.apkFile = new File(fileDir, fileName);
+//                    String fileName = getFileName(urlConnection);
+                    mDownloadInfo.apkFile = new File(fileDir, mApkFileName);
                     outputStream = new BufferedOutputStream(new FileOutputStream(mDownloadInfo.apkFile));
                     Log.d(TAG, "Downloading apk into " + mDownloadInfo.apkFile);
                     byte[] buffer = new byte[BUFFER_SIZE];

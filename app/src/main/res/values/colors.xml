@@ -4,6 +4,11 @@
     <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#607D8B</color>
 
+    <color name="blackBlueColorPrimary">@color/ff.theme.light.dark_blue.colorPrimary</color>
+    <color name="blackBlueColorPrimaryDark">@color/ff.theme.light.dark_blue.colorPrimaryDark</color>
+    <color name="blackBlueColorAccent">@color/ff.theme.light.dark_blue.colorAccent</color>
+
+
     <!--<color name="ff.theme.blue.colorPrimary">#4A90E2</color>-->
     <!--<color name="ff.theme.blue.colorPrimaryDark">#4A90E2</color>-->
     <!--<color name="ff.theme.blue.colorAccent">#FFFFFF</color>-->
@@ -28,6 +33,16 @@
     <color name="ff.theme.white.textColorSecondary">#7F7F7F</color>
     <color name="ff.theme.white.characterView.textColor">#CCCCCC</color>
     <color name="ff.theme.white.characterView.BackgroundColor">#EEEEEE</color>
+
+    <color name="ff.theme.light.blue.statusBar">#4294ea</color>
+    <color name="ff.theme.light.blue.colorPrimary">#4294ea</color>
+    <color name="ff.theme.light.blue.colorPrimaryDark">#367bc4</color>
+    <color name="ff.theme.light.blue.colorAccent">#585858</color>
+
+    <color name="ff.theme.light.dark_blue.colorPrimary">#304459</color>
+    <color name="ff.theme.light.dark_blue.colorPrimaryDark">#34495e</color>
+    <color name="ff.theme.light.dark_blue.colorAccent">#117be6</color>
+
 
     <color name="ff.theme.black.colorPrimary">#374046</color>
     <color name="ff.theme.black.colorPrimaryDark">#374046</color>
@@ -70,8 +85,8 @@
     <color name="swiperefresh.colorscheme.third">#607D8B</color>
 
     <!-- Splash -->
-    <color name="ff.splash.background">@color/ff.theme.blue.colorPrimary</color>
-    <color name="ff.splash.gradientColor">#5BB9FA</color>
+    <color name="ff.splash.background">@color/blackBlueColorPrimary</color>
+    <color name="ff.splash.gradientColor">@color/blackBlueColorPrimaryDark</color>
 
     <!-- Sign In -->
     <color name="ff.signin.background">@color/ff.theme.blue.colorPrimary</color>
@@ -83,4 +98,10 @@
 
     <!-- WWebView -->
     <color name="ff.webview.customTabs.toolbar">#393a3f</color>
+
+    <color name="blue_500">#2196F3</color>
+    <color name="blue_700">#1976D2</color>
+
+    <color name="android_type">#57a644</color>
+    <color name="ios_type">#60c1c1</color>
 </resources>

@@ -45,6 +45,7 @@ public class AppInfo {
                 localVersionName = packageInfo.versionName;
                 localVersionCode = packageInfo.versionCode;
                 isUpToDate = localVersionCode >= onlineVersionCode;
+                Log.i("====","localVersionCode "+localVersionCode+" - onlineVersionCode "+onlineVersionCode);
                 if (isUpToDate) {
                     // http://stackoverflow.com/a/3422824/2290191
                     launchIntent = packageManager.getLaunchIntentForPackage(packageName);

@@ -50,6 +50,21 @@ public class WarpUtils {
             public String getAppType() {
                 return model.appType;
             }
+
+            @Override
+            public String getAppCreated() {
+                return entity.appCreated;
+            }
+
+            @Override
+            public long getAppFileSize() {
+                return model.appFileSize;
+            }
+
+            @Override
+            public boolean isAppLatest() {
+                return false;
+            }
         };
     }
 }

@@ -1,116 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/ff.padding.large"
     android:paddingStart="@dimen/ff.padding.large"
-    android:background="?attr/selectableItemBackground"
     tools:ignore="RtlSymmetry">
 
-    <ImageView
-        android:id="@+id/image_view_icon"
-        android:layout_width="@dimen/ff.app.icon.size"
-        android:layout_height="@dimen/ff.app.icon.size"
-        android:layout_marginTop="@dimen/ff.padding.large"
-        android:layout_marginBottom="@dimen/ff.padding.large"
-        android:layout_marginRight="@dimen/ff.margin.normal"
-        android:layout_marginEnd="@dimen/ff.margin.normal"
-        tools:src="@mipmap/ic_launcher"
-        android:contentDescription="@string/ff.app.name"/>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/ff.padding.large"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/image_view_icon"
-        android:layout_toEndOf="@id/image_view_icon"
-        android:layout_toLeftOf="@+id/button_action"
-        android:layout_toStartOf="@+id/button_action"
-        android:layout_centerVertical="true"
-        >
-
-        <TextView
-            android:id="@+id/text_view_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/ff.textSize.title"
-            android:textColor="@color/ff.textColor.title"
-            tools:text="fir.flight"
-            />
-
-        <TextView
-            android:id="@+id/text_view_local_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ff.padding.small"
-            android:textSize="@dimen/ff.textSize.tips"
-            android:textColor="@color/ff.textColor.tips"
-            tools:text="v2.0.1(160110)"
-            android:visibility="gone"
-            tools:visibility="visible"
-            />
-
-        <TextView
-            android:id="@+id/text_view_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ff.padding.small"
-            android:textSize="@dimen/ff.textSize.tips"
-            android:textColor="@color/ff.textColor.tips"
-            tools:text="v2.1.1(160231)"
-            />
-
-        <TextView
-            android:id="@+id/text_view_bundle_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ff.padding.small"
-            android:textSize="@dimen/ff.textSize.tips"
-            android:textColor="@color/ff.textColor.tips"
-            tools:text="io.github.ryanhoo.firFlight"
-            />
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/layout_ios_badge"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:visibility="gone"
-        tools:visibility="visible"
-        >
+        tools:background="#f00">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_app_item_badge"
-            />
+            android:id="@+id/image_view_icon"
+            android:layout_width="@dimen/ff.app.icon.size"
+            android:layout_height="@dimen/ff.app.icon.size"
+            android:layout_marginBottom="@dimen/ff.padding.large"
+            android:layout_marginEnd="@dimen/ff.margin.normal"
+            android:layout_marginRight="@dimen/ff.margin.normal"
+            android:layout_marginTop="@dimen/ff.padding.large"
+            android:contentDescription="@string/ff.app.name"
+            tools:src="@mipmap/ic_launcher"/>
 
-        <ImageView
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/image_view_icon"
+            android:layout_toLeftOf="@+id/button_action"
+            android:layout_toRightOf="@id/image_view_icon"
+            android:layout_toStartOf="@+id/button_action"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_view_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:maxLength="10"
+                    android:textColor="@color/ff.textColor.title"
+                    android:textSize="@dimen/ff.textSize.title"
+                    tools:text="fir.flight"/>
+
+                <TextView
+                    android:id="@+id/text_view_app_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/ff.margin.normal.text"
+                    android:background="@drawable/type_android"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textColor="@color/ff.white"
+                    android:textSize="@dimen/ff.textSize.tips"
+                    tools:text="Android"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/ff.padding.small">
+
+
+                <TextView
+                    android:id="@+id/text_view_local_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/ff.textColor.tips"
+                    android:textSize="@dimen/ff.textSize.tips"
+                    android:visibility="gone"
+                    tools:text="v2.0.1(160110)"
+                    tools:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/text_view_tip_update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="gone"
+                    android:text=" -> "/>
+
+                <TextView
+                    android:id="@+id/text_view_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/ff.textColor.tips"
+                    android:textSize="@dimen/ff.textSize.tips"
+                    tools:text="v2.1.1(160231)"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/text_view_app_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ff.padding.small"
+                    android:textColor="@color/ff.textColor.tips"
+                    android:textSize="@dimen/ff.textSize.tips"
+                    android:text="2.4M"
+                    tools:visibility="visible"/>
+
+
+                <TextView
+                    android:id="@+id/text_view_update_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ff.margin.normal.text"
+                    android:layout_marginTop="@dimen/ff.padding.small"
+                    android:textColor="@color/ff.textColor.tips"
+                    android:textSize="@dimen/ff.textSize.tips"
+                    android:text="更新于 2016/09/04"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_action"
+            style="@style/FFButton"
+            android:layout_width="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ff.padding.small"
+            android:layout_marginRight="@dimen/ff.padding.large"
+            tools:ignore="RtlHardcoded"
+            tools:text="@string/ff.apps.install"/>
+
+    </RelativeLayout>
+
+
+    <com.ms.square.android.expandabletextview.ExpandableTextView
+        android:id="@+id/et_change_log"
+        xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        expandableTextView:animDuration="300"
+        tools:background="#1d1b1b"
+        expandableTextView:maxCollapsedLines="2">
+
+        <TextView
+            android:id="@id/expandable_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="1、修改橱窗展示统计 @佟磊2、语音小铺加统计 — 宋志刚3、天气，定位，网络访问统计点增加是否亮屏参数 @段迪4、修复bugly灰度产生的bug @all5、修复MJWidgetManage单例返回空指针问题 @李建峰6、修改明星小人三句话不居中问题 @佟磊"
+            android:textColor="@color/ff.textColor.tips"
+            android:textSize="@dimen/ff.textSize.tips"/>
+
+        <ImageButton
+            android:id="@id/expand_collapse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_ios"
-            android:layout_margin="@dimen/ff.padding.normal"
-            />
-    </FrameLayout>
+            android:layout_gravity="right|bottom"
+            android:background="@android:color/transparent"
+            android:padding="16dp"/>
+    </com.ms.square.android.expandabletextview.ExpandableTextView>
+</LinearLayout>
 
 
-    <Button
-        android:id="@+id/button_action"
-        style="@style/FFButton"
-        android:layout_width="60dp"
-        android:layout_marginLeft="@dimen/ff.padding.small"
-        android:layout_marginRight="@dimen/ff.padding.large"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        tools:text="@string/ff.apps.install"
-        tools:ignore="RtlHardcoded"
-        />
-
-</RelativeLayout>

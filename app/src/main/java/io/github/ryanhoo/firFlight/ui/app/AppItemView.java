@@ -5,10 +5,14 @@ import android.graphics.Paint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
+
+import java.text.DecimalFormat;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,15 +41,24 @@ public class AppItemView extends RelativeLayout implements IAdapterView<IAppBasi
     TextView textViewLocalVersion;
     @Bind(R.id.text_view_version)
     TextView textViewVersion;
-    @Bind(R.id.text_view_bundle_id)
-    TextView textViewBundleId;
+    @Bind(R.id.text_view_app_type)
+    TextView textViewAppType;
+    @Bind(R.id.et_change_log)
+    ExpandableTextView textViewChangeLog;
     @Bind(R.id.button_action)
     Button buttonAction;
-    @Bind(R.id.layout_ios_badge)
-    View layoutIOSBadge;
+    @Bind(R.id.text_view_tip_update)
+    TextView textViewTipUpdate;
+    @Bind(R.id.text_view_app_size)
+    TextView textViewAppSize;
+    @Bind(R.id.text_view_update_time)
+    TextView textViewUpdateTime;
+    @Bind(R.id.ll_app_name)
+    LinearLayout llAppNameLayout;
+
 
     AppInfo appInfo;
-
+    private boolean isShowInAppDetail;
     public AppItemView(Context context) {
         super(context);
 
@@ -56,23 +69,38 @@ public class AppItemView extends RelativeLayout implements IAdapterView<IAppBasi
         textViewLocalVersion.setPaintFlags(textViewLocalVersion.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 
+    public AppItemView(Context context,boolean isShowInAppDetail) {
+        this(context);
+        this.isShowInAppDetail = isShowInAppDetail;
+    }
+
     @Override
     public void bind(IAppBasic app, int position) {
         appInfo = new AppInfo(mContext, app);
+        if(isShowInAppDetail){
+            imageView.setVisibility(GONE);
+            llAppNameLayout.setVisibility(GONE);
+            textViewChangeLog.setMaxCollapsedLines(4);
+        }
 
-        Glide.with(mContext)
-                .load("http://o1wh05aeh.qnssl.com/image/view/app_icons/"+app.getAppIcon())
-                .placeholder(CharacterDrawable.create(mContext, app.getAppName().charAt(0), false, R.dimen.ff_padding_large))
-                .into(imageView);
+        if(imageView.getVisibility() == VISIBLE){
+            Glide.with(mContext)
+                    .load(app.getAppIcon())
+                    .placeholder(CharacterDrawable.create(mContext, app.getAppName().charAt(0), false, R.dimen.ff_padding_large))
+                    .into(imageView);
+        }
+
         textViewName.setText(app.getAppName());
         textViewVersion.setText(String.format("%s(%s)",
                 app.getAppVersion(),
                 app.getAppBuildVersion()
         ));
-        textViewBundleId.setText(app.getAppIdentifier());
+
 
         // Hide old version when app is not installed or already up-to-date
         textViewLocalVersion.setVisibility(
+                (appInfo.isUpToDate || !appInfo.isInstalled) ? View.GONE : View.VISIBLE);
+        textViewTipUpdate.setVisibility(
                 (appInfo.isUpToDate || !appInfo.isInstalled) ? View.GONE : View.VISIBLE);
         if (appInfo.isInstalled && !appInfo.isUpToDate) {
             textViewLocalVersion.setText(String.format("%s(%s)",
@@ -80,6 +108,15 @@ public class AppItemView extends RelativeLayout implements IAdapterView<IAppBasi
         }
         boolean isAndroidApp = AppUtils.isAndroidApp(app.getAppType());
         buttonAction.setVisibility(isAndroidApp ? View.VISIBLE : View.GONE);
-        layoutIOSBadge.setVisibility(isAndroidApp ? View.GONE : View.VISIBLE);
+        textViewAppType.setText(isAndroidApp?"Android":"iOS");
+        textViewAppType.setBackgroundResource(isAndroidApp?R.drawable.type_android:R.drawable.type_ios);
+        textViewChangeLog.setText(app.getAppUpdateDescription());
+
+        DecimalFormat decimalFormat=new DecimalFormat("0.00");
+        float size = (float)app.getAppFileSize()/(1024*1024);
+        String stringSize = decimalFormat.format(size);
+        textViewAppSize.setText(stringSize+"Mb");
+
+        textViewUpdateTime.setText("更新于"+app.getAppCreated());
     }
 }

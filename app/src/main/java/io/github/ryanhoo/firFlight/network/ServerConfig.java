@@ -14,4 +14,6 @@ public interface ServerConfig {
 
     String FIR_HOST = "http://fir.im";
 
+    String ICON_HOST = "http://o1wh05aeh.qnssl.com/image/view/app_icons/";
+
 }

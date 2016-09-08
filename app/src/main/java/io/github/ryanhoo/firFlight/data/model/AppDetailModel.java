@@ -2,16 +2,19 @@ package io.github.ryanhoo.firFlight.data.model;
 
 import java.util.List;
 
+import io.github.ryanhoo.firFlight.network.ServerConfig;
+import io.github.ryanhoo.firFlight.util.DateUtils;
+
 /**
  * Created by GuDong on 8/28/16 21:44.
  * Contact with gudong.name@gmail.com.
  */
-public class AppDetailModel {
+public class AppDetailModel implements IAppBasic{
     public String appKey;
     public String userKey;
     public String appType;
     public String appIsLastest;
-    public String appFileSize;
+    public long appFileSize;
     public String appName;
     public String appVersion;
     public String appVersionNo;
@@ -48,4 +51,60 @@ public class AppDetailModel {
 
     public List<AppLite> otherapps;
     public List<?> comments;
+
+    @Override
+    public String getAppIcon() {
+        return ServerConfig.ICON_HOST+appIcon;
+    }
+
+    @Override
+    public String getAppKey() {
+        return appKey;
+    }
+
+    @Override
+    public String getAppName() {
+        return appName;
+    }
+
+    @Override
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    @Override
+    public String getAppBuildVersion() {
+        return appBuildVersion;
+    }
+
+    @Override
+    public String getAppIdentifier() {
+        return appIdentifier;
+    }
+
+    @Override
+    public String getAppUpdateDescription() {
+        return appUpdateDescription;
+    }
+
+    @Override
+    public String getAppType() {
+        return appType;
+    }
+
+    @Override
+    public String getAppCreated() {
+        return DateUtils.formatTimePersonality(appCreated);
+    }
+
+    @Override
+    public long getAppFileSize() {
+        return appFileSize;
+    }
+
+
+    @Override
+    public boolean isAppLatest() {
+        return "1".equals(appIsLastest);
+    }
 }

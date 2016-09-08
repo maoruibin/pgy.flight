@@ -41,6 +41,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/FFTheme.Main" />
         <activity
+            android:name=".ui.app.AppDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/FFTheme.Detail"/>
+        <activity
             android:name=".ui.webview.WebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FFTheme.WebView" />
@@ -91,9 +95,6 @@
             android:name="FLIGHT_FLAVOR_NAME"
             android:value="${flightFlavorName}" />
 
-        <activity
-            android:name=".ui.app.AppDetailActivity"
-            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

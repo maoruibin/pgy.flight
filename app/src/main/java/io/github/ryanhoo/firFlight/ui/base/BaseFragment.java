@@ -2,6 +2,7 @@ package io.github.ryanhoo.firFlight.ui.base;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
@@ -12,8 +13,7 @@ import rx.subscriptions.CompositeSubscription;
  * Time: 12:14 AM
  * Desc: BaseFragment
  */
-public abstract class BaseFragment extends Fragment {
-
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     private CompositeSubscription mSubscriptions;
 
     @Override

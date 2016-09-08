@@ -54,4 +54,19 @@ public class AppLite implements IAppBasic{
     public String getAppType() {
         return 2+"";
     }
+
+    @Override
+    public String getAppCreated() {
+        return appCreated;
+    }
+
+    @Override
+    public long getAppFileSize() {
+        return 0;
+    }
+
+    @Override
+    public boolean isAppLatest() {
+        return false;
+    }
 }

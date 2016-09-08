@@ -3,13 +3,13 @@ package io.github.ryanhoo.firFlight.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,9 +17,7 @@ import io.github.ryanhoo.firFlight.R;
 import io.github.ryanhoo.firFlight.ui.about.AboutActivity;
 import io.github.ryanhoo.firFlight.ui.app.AppsFragment;
 import io.github.ryanhoo.firFlight.ui.base.BaseActivity;
-import io.github.ryanhoo.firFlight.ui.base.BaseFragment;
 import io.github.ryanhoo.firFlight.ui.setting.SettingsActivity;
-import io.github.ryanhoo.firFlight.ui.tools.TadayFragment;
 
 /**
  * Created with Android Studio.
@@ -32,10 +30,8 @@ public class MainActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.tab_layout)
-    TabLayout tabLayout;
-    @Bind(R.id.view_pager)
-    ViewPager viewPager;
+    @Bind(R.id.fl_container)
+    FrameLayout flContainer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,17 +46,8 @@ public class MainActivity extends BaseActivity {
 
         toolbar.setOverflowIcon(ContextCompat.getDrawable(this,R.drawable.ic_more_vert_black_24dp));
 
-        final String[] tabTitles = getResources().getStringArray(R.array.ff_main_tab_titles);
-        final BaseFragment[] fragments = new BaseFragment[tabTitles.length];
-        fragments[0] = new AppsFragment();
-        fragments[1] = new TadayFragment();
-
-        MainTabAdapter adapter = new MainTabAdapter(getSupportFragmentManager(), tabTitles, fragments);
-        viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(adapter.getCount() - 1);
-        viewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.ff_padding_large));
-
-        tabLayout.setupWithViewPager(viewPager);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fl_container, AppsFragment.getInstance()).commitAllowingStateLoss();
     }
 
     @Override
@@ -73,7 +60,6 @@ public class MainActivity extends BaseActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

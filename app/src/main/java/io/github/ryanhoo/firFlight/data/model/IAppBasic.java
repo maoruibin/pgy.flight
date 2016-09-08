@@ -21,4 +21,11 @@ public interface IAppBasic {
     String getAppUpdateDescription();
 
     String getAppType();
+
+    String getAppCreated();
+
+    long getAppFileSize();
+
+    boolean isAppLatest();
+
 }

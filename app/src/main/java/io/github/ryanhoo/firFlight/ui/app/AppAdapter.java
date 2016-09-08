@@ -23,19 +23,24 @@ import io.github.ryanhoo.firFlight.ui.common.adapter.OnItemClickListener;
  * Time: 10:48 PM
  * Desc: AppAdapterV2
  */
-/* package */ class AppAdapter extends ListAdapter<IAppBasic, AppItemView> {
+class AppAdapter extends ListAdapter<IAppBasic, AppItemView> {
 
     private Map<String, AppDownloadTask> mTasks;
     private AppItemClickListener mItemClickListener;
-
-    /* package */ AppAdapter(Context context, List<IAppBasic> data) {
+    private boolean isShowInAppDetail;
+    AppAdapter(Context context, List<IAppBasic> data) {
         super(context, data);
         mTasks = new HashMap<>();
     }
 
+    AppAdapter(Context context, List<IAppBasic> data,boolean isShowInAppDetail) {
+        this(context, data);
+        this.isShowInAppDetail = isShowInAppDetail;
+    }
+
     @Override
     protected AppItemView createView(Context context) {
-        return new AppItemView(context);
+        return new AppItemView(context,isShowInAppDetail);
     }
 
     @Override
@@ -72,6 +77,9 @@ import io.github.ryanhoo.firFlight.ui.common.adapter.OnItemClickListener;
                         ? R.string.ff_apps_install
                         : itemView.appInfo.isUpToDate ? R.string.ff_apps_open : R.string.ff_apps_update
                 );
+                if(isShowInAppDetail){
+                    itemView.buttonAction.setText(R.string.ff_apps_install);
+                }
             }
         }
     }

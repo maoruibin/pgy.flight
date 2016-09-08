@@ -7,7 +7,7 @@ package io.github.ryanhoo.firFlight.ui.base;
  * Time: 11:49 PM
  * Desc: BaseView
  */
-public interface BaseView<T> {
+public interface BaseView<P extends BasePresenter> {
 
-    void setPresenter(T presenter);
+    void setPresenter(P presenter);
 }

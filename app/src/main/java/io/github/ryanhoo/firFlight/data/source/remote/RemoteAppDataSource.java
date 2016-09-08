@@ -5,6 +5,7 @@ import io.github.ryanhoo.firFlight.data.model.AppPgy;
 import io.github.ryanhoo.firFlight.data.model.Bean;
 import io.github.ryanhoo.firFlight.data.source.AppContract;
 import io.github.ryanhoo.firFlight.data.source.remote.api.ApiService;
+import io.github.ryanhoo.firFlight.network.ServerConfig;
 import rx.Observable;
 
 /**
@@ -34,6 +35,6 @@ public class RemoteAppDataSource implements AppContract.Remote {
     }
 
     public static String makeDownloadUrl(String appKey){
-        return "http://www.pgyer.com/apiv1/app/install?aKey="+appKey+"&_api_key="+KEY_API;
+        return ServerConfig.API_HOST_PGY+"/apiv1/app/install?aKey="+appKey+"&_api_key="+KEY_API;
     }
 }

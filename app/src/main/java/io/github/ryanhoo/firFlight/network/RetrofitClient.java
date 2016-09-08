@@ -3,6 +3,9 @@ package io.github.ryanhoo.firFlight.network;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.Date;
+
 import io.github.ryanhoo.firFlight.FlightApplication;
 import io.github.ryanhoo.firFlight.data.model.IMessageContent;
 import io.github.ryanhoo.firFlight.network.gson.DateDeserializer;
@@ -12,8 +15,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.util.Date;
-
 /**
  * Created with Android Studio.
  * User: ryan.hoo.j@gmail.com
@@ -22,13 +23,13 @@ import java.util.Date;
  * Desc: RetrofitClient
  */
 public class RetrofitClient {
-
     public static Retrofit defaultInstance() {
         return new Retrofit.Builder()
                 .client(defaultOkHttpClient())
                 .baseUrl(ServerConfig.API_HOST)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(defaultGson()))
+
                 .build();
     }
 
@@ -53,6 +54,7 @@ public class RetrofitClient {
     public static Gson defaultGson() {
         return new GsonBuilder()
                 .registerTypeAdapter(Date.class, new DateDeserializer())
+//                .registerTypeAdapter(Date.class, new PgyDateDeserializer())
                 .registerTypeAdapter(IMessageContent.class, new MessageContentDeserializer())
                 .create();
     }

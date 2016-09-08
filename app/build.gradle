@@ -122,6 +122,7 @@ dependencies {
     compile libs.material_design
     compile libs.recyclerview_v7
     compile libs.cardview_v7
+    compile libs.palette
     compile libs.customtabs
 
     compile libs.rxjava
@@ -147,4 +148,7 @@ dependencies {
     compile libs.stetho_jsconsole
 
     compile libs.calligraphy
+
+    compile project(':ExpandableTextView')
+
 }

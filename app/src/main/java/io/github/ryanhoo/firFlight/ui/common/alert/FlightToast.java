@@ -1,6 +1,7 @@
 package io.github.ryanhoo.firFlight.ui.common.alert;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import io.github.ryanhoo.firFlight.R;
 
 /**
@@ -22,6 +24,7 @@ import io.github.ryanhoo.firFlight.R;
 public class FlightToast {
 
     public static final long MAX_DURATION = 2000; // Toast.LENGTH_LONG
+    public static final int DURATION_FOREVER = Integer.MAX_VALUE; // Toast.LENGTH_LONG
 
     private Context mContext;
     private Handler mHandler;
@@ -32,27 +35,58 @@ public class FlightToast {
     private String mMessage;
     private long mDuration = MAX_DURATION; // Default duration
 
+    private Toast mToast;
+    private CountDownTimer mDownTimer;
     private FlightToast(Context context) {
         // Avoid direct instantiation
         mContext = context;
         mHandler = new Handler();
+        mDownTimer = new CountDownTimer(DURATION_FOREVER, 1000)
+        {
+            public void onTick(long millisUntilFinished) {
+                if(mToast != null){
+                    mToast.show();
+                }
+            }
+            public void onFinish() {
+                if(mToast != null){
+                    mToast.show();
+                }
+            }
+        };
     }
 
     public void show() {
-        final Toast toast = new Toast(mContext);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.setView(customView());
-        toast.setDuration(Toast.LENGTH_LONG);
+        if(mToast == null){
+            mToast = new Toast(mContext);
+        }
+        mToast.setGravity(Gravity.CENTER, 0, 0);
+        mToast.setView(customView());
+        if(showLoading){
+            mDownTimer.start();
+        }else{
+            mToast.setDuration(Toast.LENGTH_LONG);
+        }
+
+        //少于 MAX_DURATION 的时间控制
         if (mDuration < MAX_DURATION && mDuration > 0) {
             // Cancel at a specific time
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    toast.cancel();
+                    mToast.cancel();
                 }
             }, mDuration);
         }
-        toast.show();
+        mToast.show();
+    }
+
+
+    public void hideLoadin(){
+        mDownTimer.cancel();
+        if(mToast !=null){
+            mToast.cancel();
+        }
     }
 
     private View customView() {
