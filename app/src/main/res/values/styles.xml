@@ -3,20 +3,21 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/ff.theme.white.colorPrimary</item>
-        <item name="colorPrimaryDark">@color/ff.theme.white.colorPrimaryDark</item>
-        <item name="colorAccent">@color/ff.theme.white.colorAccent</item>
+        <item name="colorPrimary">@color/ff.theme.light.dark_blue.colorPrimary</item>
+        <item name="colorPrimaryDark">@color/ff.theme.light.dark_blue.colorPrimaryDark</item>
+        <item name="colorAccent">@color/ff.theme.light.dark_blue.colorAccent</item>
 
         <item name="android:windowBackground">@color/ff.background</item>
 
-        <item name="android:textColorPrimary">@color/ff.theme.white.textColorPrimary</item>
-        <item name="android:textColorSecondary">@color/ff.theme.white.textColorSecondary</item>
+        <item name="android:textColorPrimary">@color/ff.white</item>
+        <item name="android:textColorSecondary">@color/ff.theme.white.colorPrimaryDark</item>
 
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 
         <item name="alertDialogTheme">@style/FFDialog</item>
 
         <item name="android:textViewStyle">@style/FFTheme.Widget.TextView</item>
+
     </style>
 
     <style name="FFTheme" parent="AppTheme">

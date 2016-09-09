@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.ryanhoo.firFlight">
+    package="com.moji.daypack">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,14 +16,14 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".FlightApplication"
+        android:name="com.moji.daypack.FlightApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/ff.app.name"
         android:supportsRtl="false"
         android:theme="@style/FFTheme">
         <activity
-            android:name=".ui.SplashScreenActivity"
+            android:name="com.moji.daypack.ui.SplashScreenActivity"
             android:label="@string/ff.app.name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -36,32 +36,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.moji.daypack.ui.main.MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/FFTheme.Main" />
         <activity
-            android:name=".ui.app.AppDetailActivity"
+            android:name="com.moji.daypack.ui.app.AppDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FFTheme.Detail"/>
         <activity
-            android:name=".ui.webview.WebViewActivity"
+            android:name="com.moji.daypack.ui.webview.WebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FFTheme.WebView" />
         <activity
-            android:name=".ui.setting.SettingsActivity"
+            android:name="com.moji.daypack.ui.setting.SettingsActivity"
             android:label="@string/ff.settings"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.about.AboutActivity"
+            android:name="com.moji.daypack.ui.about.AboutActivity"
             android:label="@string/ff.about"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.about.AcknowledgementsActivity"
+            android:name="com.moji.daypack.ui.about.AcknowledgementsActivity"
             android:label="@string/ff.acknowledgements"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".receiver.SystemPackageReceiver">
+        <receiver android:name="com.moji.daypack.receiver.SystemPackageReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -70,7 +70,7 @@
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.FlightReceiver">
+        <receiver android:name="com.moji.daypack.receiver.FlightReceiver">
             <intent-filter>
                 <action android:name="io.github.ryanhoo.action.UPDATE" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -80,16 +80,12 @@
         </receiver>
 
         <service
-            android:name=".service.FlightService"
+            android:name="com.moji.daypack.service.FlightService"
             android:exported="false" />
 
         <meta-data
-            android:name="io.github.ryanhoo.firFlight.GlideConfiguration"
+            android:name="com.moji.daypack.GlideConfiguration"
             android:value="GlideModule" />
-
-        <!-- <meta-data -->
-        <!-- android:name="io.fabric.ApiKey" -->
-        <!-- android:value="${fabricApiKey}" /> -->
 
         <meta-data
             android:name="FLIGHT_FLAVOR_NAME"

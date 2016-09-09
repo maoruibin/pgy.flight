@@ -1,24 +1,17 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
-
-    dependencies {
-        classpath paths.fabricClassPath
-    }
-}
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
 
-// Singing configs
+def getGitCommitCountInCurrentBranch() {
+    def cmd = 'git rev-list HEAD --count'
+    cmd.execute().text.trim().toInteger()
+}
+
 def STORE_FILE, KEY_ALIAS, STORE_PASSWORD, KEY_PASSWORD
-// Apply customization or use default
 File localConfig = file('local/config.properties')
 if (localConfig.exists()) {
     Properties configProperties = new Properties()
     configProperties.load(new FileInputStream(localConfig))
 
-    STORE_FILE = 'local/keystore.jks'
+    STORE_FILE = 'local/mojiweather2.keystore'
     KEY_ALIAS = configProperties['KEY_ALIAS']
     STORE_PASSWORD = configProperties['KEY_STORE_PASSWORD']
     KEY_PASSWORD = configProperties['KEY_PASSWORD']
@@ -29,26 +22,17 @@ if (localConfig.exists()) {
     KEY_PASSWORD = 'android'
 }
 
-// Only enable fabric kits when fabric.properties if configured properly
-boolean FABRIC_ENABLED = false
-if (file('fabric.properties').exists()) {
-    FABRIC_ENABLED = true
-}
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
 
 android {
     compileSdkVersion "$rootProject.compileSdkVersion".toInteger()
     buildToolsVersion "$rootProject.buildToolsVersion"
 
     defaultConfig {
-        applicationId 'io.github.ryanhoo.firFlight'
+        applicationId 'com.moji.daypack'
         minSdkVersion "$rootProject.minSdkVersion".toInteger()
         targetSdkVersion "$rootProject.targetSdkVersion".toInteger()
-        versionCode "$VERSION_CODE".toInteger()
-        versionName "$VERSION_NAME"
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
     }
 
     signingConfigs {
@@ -58,6 +42,7 @@ android {
             storePassword "$STORE_PASSWORD"
             keyPassword "$KEY_PASSWORD"
         }
+
     }
 
     lintOptions {
@@ -92,24 +77,20 @@ android {
 
     productFlavors {
         develop {
-            applicationId 'io.github.ryanhoo.firFlight.dev'
+            applicationIdSuffix ".dev"
         }
-
-        // fir
-        // GooglePlay
-        // WanDouJia
-        // YingYongBao
     }
 
     productFlavors.all { flavor ->
         manifestPlaceholders.put('flightFlavorName', flavor.name)
-        // Unnecessary, there already has a FLAVOR in BuildConfig
-        // flavor.buildConfigField('String', 'FLAVOR_NAME', "\"${flavor.name}\"")
-
-        // Fabric
-        ext.enableCrashlytics = FABRIC_ENABLED
-        flavor.buildConfigField("boolean", "FABRIC_ENABLED", "$FABRIC_ENABLED")
     }
+
+    applicationVariants.all { variant ->
+        //版本号自增长
+        def baseValue = 108
+        variant.mergedFlavor.versionCode = baseValue+getGitCommitCountInCurrentBranch()
+    }
+
 }
 
 dependencies {
@@ -139,9 +120,6 @@ dependencies {
     compile libs.retrofit2RxJavaAdapter
 
     compile libs.sqlbrite
-
-    compile(libs.crashlytics) { transitive = true; }
-    compile(libs.answers) { transitive = true; }
 
     compile libs.stetho
     compile libs.stetho_okhttp

@@ -17,7 +17,7 @@
         />
 
     <!-- Placeholder only for layout preview-->
-    <io.github.ryanhoo.firFlight.ui.common.widget.CharacterView
+    <com.moji.daypack.ui.common.widget.CharacterView
         xmlns:characterView="http://schemas.android.com/apk/res-auto"
         android:layout_width="56dp"
         android:layout_height="56dp"

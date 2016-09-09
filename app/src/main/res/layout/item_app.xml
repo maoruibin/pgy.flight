@@ -19,10 +19,9 @@
             android:id="@+id/image_view_icon"
             android:layout_width="@dimen/ff.app.icon.size"
             android:layout_height="@dimen/ff.app.icon.size"
-            android:layout_marginBottom="@dimen/ff.padding.large"
             android:layout_marginEnd="@dimen/ff.margin.normal"
             android:layout_marginRight="@dimen/ff.margin.normal"
-            android:layout_marginTop="@dimen/ff.padding.large"
+            android:layout_centerVertical="true"
             android:contentDescription="@string/ff.app.name"
             tools:src="@mipmap/ic_launcher"/>
 
@@ -35,6 +34,8 @@
             android:layout_toLeftOf="@+id/button_action"
             android:layout_toRightOf="@id/image_view_icon"
             android:layout_toStartOf="@+id/button_action"
+            android:layout_marginBottom="@dimen/ff.padding.large"
+            android:layout_marginTop="@dimen/ff.padding.large"
             android:orientation="vertical">
 
             <LinearLayout
@@ -164,7 +165,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="1、修改橱窗展示统计 @佟磊2、语音小铺加统计 — 宋志刚3、天气，定位，网络访问统计点增加是否亮屏参数 @段迪4、修复bugly灰度产生的bug @all5、修复MJWidgetManage单例返回空指针问题 @李建峰6、修改明星小人三句话不居中问题 @佟磊"
-            android:textColor="@color/ff.textColor.tips"
+            android:textColor="@color/ff.textColor.text"
             android:textSize="@dimen/ff.textSize.tips"/>
 
         <ImageButton

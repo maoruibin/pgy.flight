@@ -10,3 +10,5 @@
 *.jks
 
 fabric.properties
+
+/local

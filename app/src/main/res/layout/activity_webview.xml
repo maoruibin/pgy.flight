@@ -35,7 +35,7 @@
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <io.github.ryanhoo.firFlight.ui.webview.NestedWebView
+    <com.moji.daypack.ui.webview.NestedWebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -39,9 +39,10 @@
     <color name="ff.theme.light.blue.colorPrimaryDark">#367bc4</color>
     <color name="ff.theme.light.blue.colorAccent">#585858</color>
 
-    <color name="ff.theme.light.dark_blue.colorPrimary">#304459</color>
-    <color name="ff.theme.light.dark_blue.colorPrimaryDark">#34495e</color>
+    <color name="ff.theme.light.dark_blue.colorPrimary">#34495e</color>
+    <color name="ff.theme.light.dark_blue.colorPrimaryDark">#253445</color>
     <color name="ff.theme.light.dark_blue.colorAccent">#117be6</color>
+    <color name="f.theme.light.dark_blue.textColorPrimary">@color/ff.white</color>
 
 
     <color name="ff.theme.black.colorPrimary">#374046</color>

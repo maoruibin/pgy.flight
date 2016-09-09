@@ -17,7 +17,7 @@
 #}
 
 # fir.flight
--keep class io.github.ryanhoo.firFlight.GlideConfiguration
+-keep class com.moji.daypack.GlideConfiguration
 
 # Common
 -dontnote com.google.**

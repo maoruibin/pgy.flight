@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ff.padding.large"
             android:textSize="20sp"
-            android:textColor="?attr/colorAccent"
+            android:textColor="@color/ff.theme.light.dark_blue.colorPrimary"
             android:text="@string/ff.app.name"
             fontPath="@string/ff.font.roboto.medium"
             tools:ignore="MissingPrefix"/>
