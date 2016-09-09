@@ -11,7 +11,7 @@
     <string name="ff.uninstall">卸载</string>
     <string name="ff.cancel">取消</string>
     <string name="ff.confirm">确定</string>
-    <string name="ff.dismiss">隐藏</string>
+    <string name="ff.dismiss">dismiss</string>
     <string name="ff.close">关闭</string>
 
     <!-- Sign In -->
@@ -44,8 +44,8 @@
     <string name="ff.messages.empty">No messages received</string>
 
     <!-- Profile -->
-    <string name="ff.profile.menu.settings">Settings</string>
-    <string name="ff.profile.menu.about">About</string>
+    <string name="ff.profile.menu.settings">设置</string>
+    <string name="ff.profile.menu.about">关于</string>
     <string name="ff.profile.menu.sign_out">Sign Out</string>
 
     <string name="ff.profile.api_token">Api Token</string>
@@ -63,7 +63,7 @@
     <string name="ff.about.button.author">© 2016 MOJI-Android Team</string>
 
     <!-- Settings -->
-    <string name="ff.settings">Settings</string>
+    <string name="ff.settings">设置</string>
     <string name="ff.settings.section.cache">Cache</string>
     <string name="ff.settings.section.clear_download">Clear Download</string>
     <string name="ff.settings.section.updates">Updates</string>

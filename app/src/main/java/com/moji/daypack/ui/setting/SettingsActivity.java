@@ -1,24 +1,27 @@
 package com.moji.daypack.ui.setting;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.Preference;
+import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.moji.daypack.R;
+import com.moji.daypack.RxBus;
+import com.moji.daypack.event.FilterIosEvent;
 import com.moji.daypack.ui.base.BaseActivity;
 
 import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created with Android Studio.
@@ -32,12 +35,6 @@ public class SettingsActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.text_view_image_cache)
-    TextView textViewImageCache;
-    @Bind(R.id.text_view_clear_download)
-    TextView textViewClearDownload;
-    @Bind(R.id.text_view_version)
-    TextView textViewVersion;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,64 +42,88 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         supportActionBar(toolbar);
-    }
-
-    @OnClick({R.id.layout_clear_image_cache, R.id.layout_check_updates, R.id.layout_agreements, R.id.text_view_clear_download})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.layout_clear_image_cache:
-                clearImageCache();
-                break;
-            case R.id.text_view_clear_download:
-                File[]list = DOWNLOAD_DIR.listFiles();
-                for(File file:list){
-                    file.delete();
-                }
-                Toast.makeText(SettingsActivity.this, "清除 "+DOWNLOAD_DIR.getName() +"成功", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.layout_check_updates:
-                checkForUpdates();
-                break;
-            case R.id.layout_agreements:
-                showAgreements();
-                break;
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(R.id.fl_container, new SettingsFragment())
+                    .commit();
         }
     }
 
-    private void clearImageCache() {
-        new AsyncTask<Void, Integer, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                // Must NOT call this on UI thread
-                Glide.get(SettingsActivity.this).clearDiskCache();
-                return null;
+    public static class SettingsFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
+
+        @Override public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.setting);
+            findPreference("preference_clear_cache").setOnPreferenceClickListener(this);
+            findPreference("preference_clear_download").setOnPreferenceClickListener(this);
+            findPreference("preference_filter_ios").setOnPreferenceChangeListener(this);
+        }
+
+        @Override
+        public boolean onPreferenceClick(Preference preference) {
+            switch (preference.getKey()){
+                case "preference_clear_cache":
+                    clearImageCache();
+                    break;
+                case "preference_clear_download":
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("提示")
+                            .setMessage("确定要清空所有下载的 APK 文件吗？")
+                            .setPositiveButton(R.string.ff_confirm, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    File[]list = DOWNLOAD_DIR.listFiles();
+                                    for(File file:list){
+                                        if(file.getName().endsWith(".apk")){
+                                            if(file.getName().contains("墨迹") || file.getName().contains("日拱一卒") || file.getName().contains("Android")){
+                                                file.deleteOnExit();
+                                            }
+                                        }
+                                    }
+
+                                }
+                            })
+                            .setNegativeButton(R.string.ff_cancel,null)
+                            .show();
+
+                    break;
             }
+            return false;
+        }
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                // Must call this on UI thread
-                Glide.get(SettingsActivity.this).clearMemory();
-                showSnake(Snackbar.make(textViewImageCache,
-                        R.string.ff_settings_message_cache_cleared, Snackbar.LENGTH_LONG));
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
+        private void clearImageCache() {
+            new AsyncTask<Void, Integer, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    // Must NOT call this on UI thread
+                    Glide.get(getActivity()).clearDiskCache();
+                    return null;
+                }
 
-    private void checkForUpdates() {
-        showSnake(Snackbar.make(textViewVersion, R.string.ff_settings_message_coming_soon, Snackbar.LENGTH_LONG));
-    }
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    // Must call this on UI thread
+                    Glide.get(getActivity()).clearMemory();
+                    showSnake(Snackbar.make(getView(),
+                            R.string.ff_settings_message_cache_cleared, Snackbar.LENGTH_LONG));
+                }
+            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
 
-    private void showAgreements() {
-        showSnake(Snackbar.make(textViewVersion, R.string.ff_settings_message_coming_soon, Snackbar.LENGTH_LONG));
-    }
+        private void showSnake(final Snackbar snackbar) {
+            snackbar.setAction(R.string.ff_dismiss, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    snackbar.dismiss();
+                }
+            });
+            snackbar.show();
+        }
 
-    private void showSnake(final Snackbar snackbar) {
-        snackbar.setAction(R.string.ff_dismiss, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackbar.dismiss();
-            }
-        });
-        snackbar.show();
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object newValue) {
+            RxBus.getInstance().post(new FilterIosEvent());
+            return true;
+        }
     }
 }

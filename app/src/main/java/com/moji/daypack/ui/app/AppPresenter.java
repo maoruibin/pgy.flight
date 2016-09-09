@@ -1,11 +1,12 @@
 package com.moji.daypack.ui.app;
 
+import com.moji.daypack.data.model.IAppBasic;
 import com.moji.daypack.data.source.AppRepository;
 import com.moji.daypack.network.NetworkSubscriber;
+import com.moji.daypack.util.AppUtils;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.moji.daypack.data.model.IAppBasic;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -41,7 +42,17 @@ import rx.schedulers.Schedulers;
 
                     @Override
                     public void onNext(List<IAppBasic> apps) {
-                        mView.onAppListLoaded(apps);
+                        if(!AppUtils.isFilterIOS(mView.getContext())){
+                            mView.onAppListLoaded(apps);
+                        }else{
+                            List<IAppBasic> appsTempList = new ArrayList<IAppBasic>();
+                            for(IAppBasic app:apps){
+                                if(AppUtils.isAndroidApp(app.getAppType())){
+                                    appsTempList.add(app);
+                                }
+                            }
+                            mView.onAppListLoaded(appsTempList);
+                        }
                     }
 
                     @Override

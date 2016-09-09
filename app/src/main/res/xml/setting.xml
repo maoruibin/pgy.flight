@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.jenzz.materialpreference.PreferenceCategory
+        android:title="通用">
+        <com.jenzz.materialpreference.Preference
+            android:key="preference_clear_cache"
+            android:title="清理图片缓存"/>
+        <com.jenzz.materialpreference.Preference
+            android:key="preference_clear_download"
+            android:title="清理下载"/>
+
+    </com.jenzz.materialpreference.PreferenceCategory>
+
+    <com.jenzz.materialpreference.PreferenceCategory
+        android:title="高级">
+        <!--<com.jenzz.materialpreference.Preference-->
+            <!--android:key="preference_check_update"-->
+            <!--android:title="检查更新"/>-->
+        <com.jenzz.materialpreference.SwitchPreference
+            android:title="主页只显示 Android 应用"
+            android:key="preference_filter_ios"
+            android:defaultValue="false"
+            android:summaryOn="开启"
+            android:summaryOff="关闭"
+            />
+    </com.jenzz.materialpreference.PreferenceCategory>
+</PreferenceScreen>

@@ -3,21 +3,19 @@ package com.moji.daypack.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.moji.daypack.data.model.App;
+import com.moji.daypack.data.model.IAppBasic;
 import com.moji.daypack.data.model.Release;
 import com.moji.daypack.network.ServerConfig;
 
 import java.io.File;
-
-import com.moji.daypack.data.model.IAppBasic;
 
 /**
  * Created with Android Studio.
@@ -64,24 +62,6 @@ public class AppUtils {
         return false;
     }
 
-    public static String getFlavorName(Context context) {
-        if (context == null) return null;
-        String flavorName = null;
-        try {
-            Context applicationContext = context.getApplicationContext();
-            ApplicationInfo appInfo = applicationContext.getPackageManager()
-                    .getApplicationInfo(applicationContext.getPackageName(), PackageManager.GET_META_DATA);
-            Bundle metaData = appInfo.metaData;
-            if (metaData != null) {
-                flavorName = metaData.getString("FLIGHT_FLAVOR_NAME");
-                Log.d(TAG, "getFlavorName: " + flavorName);
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "getFlavorName failed: ", e);
-        }
-        return flavorName;
-    }
-
     public static String getAppUrlByShort(String shortUrl) {
         return String.format("%s/%s", ServerConfig.FIR_HOST, shortUrl);
     }
@@ -107,5 +87,9 @@ public class AppUtils {
 
     public static File getInstalledApkFile(IAppBasic app){
         return new File(DOWNLOAD_DIR,formatApkName(app));
+    }
+
+    public static boolean isFilterIOS(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("preference_filter_ios",false);
     }
 }

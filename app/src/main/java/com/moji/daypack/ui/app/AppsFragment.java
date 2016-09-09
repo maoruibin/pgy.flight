@@ -12,11 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.moji.daypack.R;
+import com.moji.daypack.RxBus;
 import com.moji.daypack.data.model.IAppBasic;
 import com.moji.daypack.data.source.AppRepository;
+import com.moji.daypack.event.FilterIosEvent;
 import com.moji.daypack.ui.helper.SwipeRefreshHelper;
 
 import butterknife.Bind;
+import rx.functions.Action1;
 
 /**
  * Created with Android Studio.
@@ -49,6 +52,16 @@ public class AppsFragment extends BaseAppListFragment<Void,AppContract.Presenter
         SwipeRefreshHelper.setRefreshIndicatorColorScheme(swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
+        RxBus.getInstance()
+                .toObservable()
+                .subscribe(new Action1() {
+                    @Override
+                    public void call(Object o) {
+                        if(o instanceof FilterIosEvent){
+                            mPresenter.loadAppList();
+                        }
+                    }
+                });
     }
 
     @Override

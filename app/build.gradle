@@ -65,24 +65,19 @@ android {
 
     buildTypes {
         debug {
-            versionNameSuffix '(D)'
+            versionNameSuffix '(Debug)'
         }
 
         release {
-            minifyEnabled true
+            //minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-    }
-
-    productFlavors {
-        develop {
-            applicationIdSuffix ".dev"
+        beta {
+            applicationIdSuffix '.beta'
+            versionNameSuffix '(Beta)'
+            signingConfig signingConfigs.release
         }
-    }
-
-    productFlavors.all { flavor ->
-        manifestPlaceholders.put('flightFlavorName', flavor.name)
     }
 
     applicationVariants.all { variant ->
@@ -126,6 +121,8 @@ dependencies {
     compile libs.stetho_jsconsole
 
     compile libs.calligraphy
+
+    compile 'com.jenzz:materialpreference:1.3'
 
     compile project(':ExpandableTextView')
 

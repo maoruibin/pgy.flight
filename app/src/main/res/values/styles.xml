@@ -9,8 +9,8 @@
 
         <item name="android:windowBackground">@color/ff.background</item>
 
-        <item name="android:textColorPrimary">@color/ff.white</item>
-        <item name="android:textColorSecondary">@color/ff.theme.white.colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/ff.textColor.title</item>
+        <item name="android:textColorSecondary">@color/ff.textColor.text</item>
 
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
 

@@ -20,7 +20,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/ff.app.name"
-        android:supportsRtl="false"
         android:theme="@style/FFTheme">
         <activity
             android:name="com.moji.daypack.ui.SplashScreenActivity"
@@ -86,10 +85,6 @@
         <meta-data
             android:name="com.moji.daypack.GlideConfiguration"
             android:value="GlideModule" />
-
-        <meta-data
-            android:name="FLIGHT_FLAVOR_NAME"
-            android:value="${flightFlavorName}" />
 
     </application>
 
