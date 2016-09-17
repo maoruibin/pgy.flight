@@ -32,6 +32,7 @@ public class AppInfo {
     public AppInfo(Context context, IAppBasic app) {
         this.app = app;
         String packageName = app.getAppIdentifier();
+        //the version info from server
         String build = app.getAppBuildVersion();
         try {
             PackageManager packageManager = context.getPackageManager();

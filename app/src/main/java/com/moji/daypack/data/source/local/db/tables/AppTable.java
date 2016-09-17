@@ -5,13 +5,7 @@ import android.database.Cursor;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import com.moji.daypack.data.model.App;
-import com.moji.daypack.data.model.Release;
 import com.moji.daypack.data.model.AppEntity;
-import com.moji.daypack.util.ObjectUtils;
-
-import java.io.IOException;
-import java.util.Date;
 
 /**
  * Created with Android Studio.
@@ -28,31 +22,38 @@ public final class AppTable implements BaseColumns, BaseTable<AppEntity> {
     public static final String TABLE_NAME = "app";
 
     // Columns
-    public static final String COLUMN_ID = _ID; // "_id"
-    public static final String COLUMN_USER_ID = "user_id";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_SHORT_URL = "short_url";
-    public static final String COLUMN_BUNDLE_ID = "bundle_id";
+    public static final String COLUMN_APP_KEY = "appKey"; // "appKey"
+    public static final String COLUMN_USER_KEY = "userKey";
+    public static final String COLUMN_APP_NAME = "appName";
+    public static final String COLUMN_ICON_URL = "appIcon";
+    public static final String COLUMN_APP_VERSION = "appVersion";
+    public static final String COLUMN_APP_IDENTIFIER = "appIdentifier";
     public static final String COLUMN_CUSTOM_MARKET_URL = "custom_market_url";
-    public static final String COLUMN_CREATED_AT = "created_at";
-    public static final String COLUMN_ICON_URL = "icon_url";
-    public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_APP_CREATED = "appCreated";
+    public static final String COLUMN_APP_TYPE = "appType";
     public static final String COLUMN_RELEASE_ID = "release_id";
+    public static final String COLUMN_APP_BUILD_VERSION = "appBuildVersion";
+    public static final String COLUMN_APP_FILE_SIZE = "appFileSize";
+    public static final String COLUMN_APP_UPDATE_DESCRIPTION = "appUpdateDescription";
+
 
     // Create & Delete
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME +
                 " ( " +
-                    COLUMN_ID + " TEXT PRIMARY KEY UNIQUE, " +
-                    COLUMN_USER_ID + " TEXT, " +
-                    COLUMN_NAME + " TEXT, " +
-                    COLUMN_SHORT_URL + " TEXT, " +
-                    COLUMN_BUNDLE_ID + " TEXT, " +
+                    COLUMN_APP_KEY + " TEXT PRIMARY KEY UNIQUE, " +
+                    COLUMN_USER_KEY + " TEXT, " +
+                    COLUMN_APP_NAME + " TEXT, " +
+                    COLUMN_APP_VERSION + " TEXT, " +
+                    COLUMN_APP_IDENTIFIER + " TEXT, " +
                     COLUMN_CUSTOM_MARKET_URL + " TEXT, " +
-                    COLUMN_CREATED_AT + " INTEGER, " +
+                    COLUMN_APP_CREATED + " INTEGER, " +
                     COLUMN_ICON_URL + " TEXT , " +
-                    COLUMN_TYPE + " TEXT , " +
-                    COLUMN_RELEASE_ID + " INTEGER" +
+                    COLUMN_APP_TYPE + " TEXT , " +
+                    COLUMN_RELEASE_ID + " INTEGER , " +
+                    COLUMN_APP_FILE_SIZE + " INTEGER , " +
+                    COLUMN_APP_BUILD_VERSION + " TEXT , " +
+                    COLUMN_APP_UPDATE_DESCRIPTION + " TEXT" +
                     // The fucking foreign key doesn't work, replacing it with trigger
                     // "FOREIGN KEY(" + COLUMN_RELEASE_ID + ") REFERENCES " +
                     // ReleaseTable.TABLE_NAME + "(" + ReleaseTable._ID + ") ON DELETE CASCADE" +
@@ -72,7 +73,7 @@ public final class AppTable implements BaseColumns, BaseTable<AppEntity> {
 
     public static final String QUERY_ALL_APPS = "SELECT * FROM " + TABLE_NAME + ";";
 
-    public static final String WHERE_ID_EQUALS = COLUMN_ID + "=?";
+    public static final String WHERE_ID_EQUALS = COLUMN_APP_KEY + "=?";
 
     @Override
     public String createTableSql() {
@@ -87,53 +88,38 @@ public final class AppTable implements BaseColumns, BaseTable<AppEntity> {
     @Override
     public ContentValues toContentValues(AppEntity app) {
         ContentValues contentValues = new ContentValues();
-//        contentValues.put(COLUMN_ID, app.getId());
-//        contentValues.put(COLUMN_USER_ID, app.getUserId());
-//        contentValues.put(COLUMN_NAME, app.getName());
-//        contentValues.put(COLUMN_BUNDLE_ID, app.getBundleId());
-//        contentValues.put(COLUMN_SHORT_URL, app.getShortUrl());
-//        contentValues.put(COLUMN_ICON_URL, app.getIconUrl());
-//        contentValues.put(COLUMN_CUSTOM_MARKET_URL, app.getCustomMarketUrl());
-//        contentValues.put(COLUMN_TYPE, app.getType());
-//        contentValues.put(COLUMN_CREATED_AT, app.getCreatedAt() == null ? -1 : app.getCreatedAt().getTime());
-//        if (app.getMasterRelease() != null) {
-//            try {
-//                byte[] releaseInBytes = ObjectUtils.objectToByte(app.getMasterRelease());
-//                contentValues.put(COLUMN_RELEASE_ID, releaseInBytes);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//
-//            }
-//        }
+        contentValues.put(COLUMN_APP_KEY, app.getAppKey());
+        contentValues.put(COLUMN_USER_KEY, app.userKey);
+        contentValues.put(COLUMN_APP_NAME, app.getAppName());
+        contentValues.put(COLUMN_APP_IDENTIFIER, app.getAppIdentifier());
+        contentValues.put(COLUMN_APP_VERSION, app.getAppVersion());
+        contentValues.put(COLUMN_APP_BUILD_VERSION, app.getAppBuildVersion());
+        contentValues.put(COLUMN_ICON_URL, app.getAppIcon());
+        contentValues.put(COLUMN_CUSTOM_MARKET_URL,"");
+        contentValues.put(COLUMN_APP_TYPE, app.getAppType());
+        contentValues.put(COLUMN_APP_CREATED, app.appCreated);
+        contentValues.put(COLUMN_APP_FILE_SIZE, app.getAppFileSize());
+
+        contentValues.put(COLUMN_APP_UPDATE_DESCRIPTION, app.getAppUpdateDescription());
         return contentValues;
     }
 
     @Override
     public AppEntity parseCursor(Cursor c) {
-        if(true){
-            return new AppEntity();
-        }
-        App app = new App();
-        app.setId(c.getString(c.getColumnIndexOrThrow(COLUMN_ID)));
-        app.setName(c.getString(c.getColumnIndexOrThrow(COLUMN_USER_ID)));
-        app.setName(c.getString(c.getColumnIndexOrThrow(COLUMN_NAME)));
-        app.setBundleId(c.getString(c.getColumnIndexOrThrow(COLUMN_BUNDLE_ID)));
-        app.setShortUrl(c.getString(c.getColumnIndexOrThrow(COLUMN_SHORT_URL)));
-        app.setIconUrl(c.getString(c.getColumnIndexOrThrow(COLUMN_ICON_URL)));
-        app.setCustomMarketUrl(c.getString(c.getColumnIndexOrThrow(COLUMN_CUSTOM_MARKET_URL)));
-        app.setType(c.getString(c.getColumnIndexOrThrow(COLUMN_TYPE)));
-        long createdAt = c.getLong(c.getColumnIndexOrThrow(COLUMN_CREATED_AT));
-        if (createdAt != -1) {
-            app.setCreatedAt(new Date(createdAt));
-        }
-        byte[] releaseInBytes = c.getBlob(c.getColumnIndexOrThrow(COLUMN_RELEASE_ID));
-        if (releaseInBytes != null) {
-            try {
-                app.setMasterRelease((Release) ObjectUtils.byteToObject(releaseInBytes));
-            } catch (IOException | ClassNotFoundException e) {
-                Log.e(TAG, "parseCursor: ", e);
-            }
-        }
-        return null;
+
+        AppEntity app = new AppEntity();
+        app.setAppKey(c.getString(c.getColumnIndexOrThrow(COLUMN_APP_KEY)));
+        app.setUserKey(c.getString(c.getColumnIndexOrThrow(COLUMN_USER_KEY)));
+        app.setAppName(c.getString(c.getColumnIndexOrThrow(COLUMN_APP_NAME)));
+        app.setAppIdentifier(c.getString(c.getColumnIndexOrThrow(COLUMN_APP_IDENTIFIER)));
+        app.setAppVersion(c.getString(c.getColumnIndexOrThrow(COLUMN_APP_VERSION)));
+        app.setAppBuildVersion(c.getString(c.getColumnIndexOrThrow(COLUMN_APP_BUILD_VERSION)));
+        app.setAppIcon(c.getString(c.getColumnIndexOrThrow(COLUMN_ICON_URL)));
+        app.setAppType(c.getString(c.getColumnIndexOrThrow(COLUMN_APP_TYPE)));
+        app.setAppCreated(c.getString(c.getColumnIndexOrThrow(COLUMN_APP_CREATED)));
+        app.setAppFileSize(c.getInt(c.getColumnIndexOrThrow(COLUMN_APP_FILE_SIZE)));
+        app.setAppUpdateDescription(c.getString(c.getColumnIndexOrThrow(COLUMN_APP_UPDATE_DESCRIPTION)));
+        Log.i("====",app.toString());
+        return app;
     }
 }

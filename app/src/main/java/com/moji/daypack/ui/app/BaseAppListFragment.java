@@ -155,8 +155,10 @@ public abstract class BaseAppListFragment<T,P extends AbsAppListContract.Present
 
     @Override
     public void onLoadAppCompleted() {
-        if(swipeRefreshLayout!=null){
+
+        if(swipeRefreshLayout!=null && swipeRefreshLayout.isRefreshing()){
             swipeRefreshLayout.setRefreshing(false);
+            Log.i("%%%%%%%%%%%%%%%","setRefreshing false");
         }
     }
 
@@ -169,12 +171,7 @@ public abstract class BaseAppListFragment<T,P extends AbsAppListContract.Present
     @Override
     public void onLoadAppStarted() {
         if(swipeRefreshLayout!=null){
-            swipeRefreshLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(true);
-                }
-            });
+            swipeRefreshLayout.setRefreshing(true);
         }
     }
 

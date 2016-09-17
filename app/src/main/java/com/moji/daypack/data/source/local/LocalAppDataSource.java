@@ -8,10 +8,11 @@ import android.support.annotation.NonNull;
 import com.moji.daypack.data.model.AppEntity;
 import com.moji.daypack.data.source.AppContract;
 import com.moji.daypack.data.source.local.db.tables.AppTable;
-import rx.Observable;
-import rx.functions.Func1;
 
 import java.util.List;
+
+import rx.Observable;
+import rx.functions.Func1;
 
 /**
  * Created with Android Studio.

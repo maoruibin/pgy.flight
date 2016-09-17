@@ -7,13 +7,13 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.moji.daypack.R;
-import com.moji.daypack.account.UserSession;
-import com.moji.daypack.data.model.App;
 import com.moji.daypack.data.model.IAppBasic;
 import com.moji.daypack.data.source.AppRepository;
+import com.moji.daypack.ui.app.AppInfo;
 import com.moji.daypack.ui.main.MainActivity;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class FlightService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "onHandleIntent: " + intent.getAction() + " on thread #" + Thread.currentThread().getName());
-        if (!UserSession.getInstance().isSignedIn()) return;
+        //if (!UserSession.getInstance().isSignedIn()) return;
 
         Log.d(TAG, "Start requesting apps...");
         AppRepository.getInstance().apps(true)
@@ -68,10 +68,10 @@ public class FlightService extends IntentService {
                     @Override
                     public void onNext(List<IAppBasic> apps) {
                         for (final IAppBasic app : apps) {
-//                            AppInfo appInfo = new AppInfo(FlightService.this, app);
-//                            if (appInfo.isInstalled && !appInfo.isUpToDate) {
-//                                onAppNewVersion(app);
-//                            }
+                            AppInfo appInfo = new AppInfo(FlightService.this, app);
+                            if (appInfo.isInstalled && !appInfo.isUpToDate) {
+                                onAppNewVersion(app);
+                            }
                         }
                     }
                 });
@@ -83,26 +83,28 @@ public class FlightService extends IntentService {
         super.onDestroy();
     }
 
-    private void onAppNewVersion(App app) {
+    private void onAppNewVersion(IAppBasic app) {
         // Notification
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        String title = app.getName();
+        String title = app.getAppName();
         String content = getString(R.string.ff_notification_app_new_version_message,
-                app.getMasterRelease().getVersion(), app.getMasterRelease().getBuild());
+                app.getAppVersion(), app.getAppBuildVersion());
         Log.d(TAG, String.format("%s \t %s", title, content));
-        Notification.Builder builder = new Notification.Builder(this)
-                .setSmallIcon(R.drawable.ic_nav_logo)
-                .setContentTitle(title)
-                .setContentText(content)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setContentTitle(title);
+        builder.setContentText(content);
+        builder.setContentIntent(pendingIntent);
+        builder.setAutoCancel(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder.setColor(Color.parseColor("#42000000"));
         }
         Notification notification = builder.build();
-        int notificationId = app.getId().hashCode();
+        int notificationId = app.getAppKey().hashCode();
         notificationManager.notify(notificationId, notification);
     }
 }

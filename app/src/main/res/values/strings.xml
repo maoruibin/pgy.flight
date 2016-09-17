@@ -11,6 +11,8 @@
     <string name="ff.uninstall">卸载</string>
     <string name="ff.cancel">取消</string>
     <string name="ff.confirm">确定</string>
+    <string name="ff.grant">授予</string>
+    <string name="ff.refuse">拒绝</string>
     <string name="ff.dismiss">dismiss</string>
     <string name="ff.close">关闭</string>
 
@@ -87,7 +89,7 @@
     <string name="ff.webview.share_title">Share this page to</string>
 
     <!-- Notification -->
-    <string name="ff.notification.app.new_version.message" formatted="false">New version %s(%s)</string>
+    <string name="ff.notification.app.new_version.message" formatted="false">有新版本了 %s(%s)</string>
 
     <!-- Dialog -->
     <string name="ff.dialog.sign_out.title">Sign out</string>

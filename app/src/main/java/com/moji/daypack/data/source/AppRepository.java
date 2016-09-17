@@ -1,7 +1,6 @@
 package com.moji.daypack.data.source;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
 
 import com.moji.daypack.data.Injection;
 import com.moji.daypack.data.model.AppDetailModel;
@@ -11,6 +10,10 @@ import com.moji.daypack.data.model.Bean;
 import com.moji.daypack.data.model.IAppBasic;
 import com.moji.daypack.data.source.local.LocalAppDataSource;
 import com.moji.daypack.data.source.remote.RemoteAppDataSource;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import rx.Observable;
 import rx.functions.Func1;
 
@@ -22,7 +25,7 @@ import rx.functions.Func1;
  * Desc: AppRepository
  */
 public class AppRepository implements AppContract {
-
+    private static final String TAG = "AppRepository";
     private static AppRepository sInstance;
 
     AppContract.Local mLocalDataSource;
@@ -68,12 +71,10 @@ public class AppRepository implements AppContract {
 
     @Override
     public Observable<List<IAppBasic>> apps(boolean forceUpdate) {
-        //Observable<List<AppEntity>> local = mLocalDataSource.apps();
-        Observable<List<IAppBasic>> remote = mRemoteDataSourcePgy.apps()
-                .map(new Func1<AppPgy, List<IAppBasic>>() {
+        Observable<List<IAppBasic>> local = mLocalDataSource.apps()
+                .map(new Func1<List<AppEntity>, List<IAppBasic>>() {
                     @Override
-                    public List<IAppBasic> call(AppPgy appPgy) {
-                        List<AppEntity> list = appPgy.data.list;
+                    public List<IAppBasic> call(List<AppEntity> list) {
                         List<IAppBasic> finalAndroidAppList = new ArrayList<IAppBasic>();
                         for (AppEntity app : list) {
                             finalAndroidAppList.add(app);
@@ -81,13 +82,29 @@ public class AppRepository implements AppContract {
                         return finalAndroidAppList;
                     }
                 });
-
+        Observable<List<IAppBasic>> remote = mRemoteDataSourcePgy.apps()
+        .map(new Func1<AppPgy, List<IAppBasic>>() {
+                    @Override
+                    public List<IAppBasic> call(AppPgy appPgy) {
+                        List<AppEntity> list = appPgy.data.list;
+                        mLocalDataSource.deleteAll();
+                        mLocalDataSource.save(list);
+                        Log.i(TAG,"save success");
+                        List<IAppBasic> finalAndroidAppList = new ArrayList<IAppBasic>();
+                        for (AppEntity app : list) {
+                            finalAndroidAppList.add(app);
+                        }
+                        return finalAndroidAppList;
+                    }
+                });
         if (forceUpdate) {
+            Log.i(TAG,"use remote only");
             return remote;
         }
-        return remote;
-        //return Observable.concat(local.first(), remote);
+        Log.i(TAG,"use local and remote only");
+        return Observable.concat(local.first(), remote);
     }
+
 
     @Override
     public Observable<List<IAppBasic>> filterToday() {

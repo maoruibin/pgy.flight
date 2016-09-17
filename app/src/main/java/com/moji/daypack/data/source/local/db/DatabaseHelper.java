@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
 
-    public static final int DATABASE_VERSION = 27;
+    public static final int DATABASE_VERSION = 30;
     public static final String DATABASE_NAME = "fir-flight.db";
 
     List<Class<? extends BaseTable>> mRegisteredTables;
@@ -51,6 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             createTables(db);
+            Log.e(TAG, "onCreate db");
         } catch (Exception e) {
             Log.e(TAG, "onCreate: ", e);
         }
@@ -58,6 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.i(TAG,"onUpgrade newVersion is "+newVersion);
         onDelete(db);
         onCreate(db);
     }
@@ -88,7 +90,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (mRegisteredTables == null) return;
         for (Class<? extends BaseTable> table : mRegisteredTables) {
             BaseTable tableInstance = table.newInstance();
-            db.execSQL(tableInstance.createTableSql());
+            String sql = tableInstance.createTableSql();
+            Log.i("****",sql);
+            db.execSQL(sql);
         }
     }
 

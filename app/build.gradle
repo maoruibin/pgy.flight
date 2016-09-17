@@ -65,7 +65,7 @@ android {
 
     buildTypes {
         debug {
-            versionNameSuffix '(Debug)'
+            versionNameSuffix '-debug'
         }
 
         release {
@@ -75,7 +75,7 @@ android {
         }
         beta {
             applicationIdSuffix '.beta'
-            versionNameSuffix '(Beta)'
+            versionNameSuffix '-beta'
             signingConfig signingConfigs.release
         }
     }

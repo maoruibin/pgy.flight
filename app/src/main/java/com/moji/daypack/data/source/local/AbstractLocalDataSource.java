@@ -3,6 +3,7 @@ package com.moji.daypack.data.source.local;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.moji.daypack.BuildConfig;
 import com.moji.daypack.data.source.local.db.DatabaseHelper;
 import com.moji.daypack.data.source.local.db.tables.BaseTable;
 import com.squareup.sqlbrite.BriteDatabase;
@@ -26,6 +27,7 @@ public abstract class AbstractLocalDataSource<T extends BaseTable> {
         DatabaseHelper databaseHelper = new DatabaseHelper(context);
         SqlBrite sqlBrite = SqlBrite.create();
         mDatabaseHelper = sqlBrite.wrapDatabaseHelper(databaseHelper, Schedulers.io());
+        mDatabaseHelper.setLoggingEnabled(BuildConfig.DEBUG);
         mTable = instantiateTable();
     }
 

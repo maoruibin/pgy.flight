@@ -73,6 +73,9 @@ public class DateUtils {
 
     public static String formatTimePersonality(String strDate){
         Date date = parseStringToDate(strDate);
+        if(date == null){
+            return "未知";
+        }
         return convertDateToShowStr(date);
     }
 
