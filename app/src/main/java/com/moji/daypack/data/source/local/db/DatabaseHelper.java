@@ -25,8 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
 
-    public static final int DATABASE_VERSION = 30;
-    public static final String DATABASE_NAME = "fir-flight.db";
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "daypack.db";
 
     List<Class<? extends BaseTable>> mRegisteredTables;
 
