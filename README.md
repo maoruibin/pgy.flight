@@ -15,6 +15,7 @@ pgy.flight 是在 [fir.flight](https://github.com/ryanhoo/fir.flight) 基础上�
 
 ![splash](http://7xr9gx.com1.z0.glb.clouddn.com/1%E7%9A%84%E5%89%AF%E6%9C%AC.jpg)
 ![about](http://7xr9gx.com1.z0.glb.clouddn.com/2%E7%9A%84%E5%89%AF%E6%9C%AC.jpg)
+![login](http://7xr9gx.com1.z0.glb.clouddn.com/3%E7%9A%84%E5%89%AF%E6%9C%AC.jpg)
 
 ## Author
 关注我
