@@ -1,6 +1,6 @@
 # pgy.flight
 
-[![Travis](https://travis-ci.org/maoruibin/pgy.flight.svg?branch=develop)](https://travis-ci.org/maoruibin/pgy.flight)
+[![Travis](https://travis-ci.org/maoruibin/pgy.flight.svg?branch=master)](https://travis-ci.org/maoruibin/pgy.flight)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/maoruibin/pgy.flight#license)
 [![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](https://www.android.com)
 [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16)
