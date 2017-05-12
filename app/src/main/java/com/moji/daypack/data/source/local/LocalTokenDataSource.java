@@ -45,7 +45,7 @@ public class LocalTokenDataSource extends AbstractLocalDataSource<TokenTable> im
 
     @Override
     public boolean delete(Token token) {
-        return mDatabaseHelper.delete(TokenTable.TABLE_NAME, TokenTable.WHERE_ACCESS_TOKEN_EQUALS, token.getAccessToken()) == 1;
+        return mDatabaseHelper.delete(TokenTable.TABLE_NAME, TokenTable.WHERE_ACCESS_TOKEN_EQUALS, token.getUserKey()) == 1;
     }
 
     @Override

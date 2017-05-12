@@ -32,25 +32,25 @@ public class Token implements Parcelable {
     }
 
     @SerializedName("access_token")
-    private String accessToken;
+    private String userKey;
 
     @SerializedName("api_token")
-    private String apiToken;
+    private String apiKey;
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getUserKey() {
+        return userKey;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
     }
 
-    public String getApiToken() {
-        return apiToken;
+    public String getApiKey() {
+        return apiKey;
     }
 
-    public void setApiToken(String apiToken) {
-        this.apiToken = apiToken;
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     @Override
@@ -60,13 +60,13 @@ public class Token implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.accessToken);
-        dest.writeString(this.apiToken);
+        dest.writeString(this.userKey);
+        dest.writeString(this.apiKey);
     }
 
     private void readFromParcel(Parcel in) {
-        this.accessToken = in.readString();
-        this.apiToken = in.readString();
+        this.userKey = in.readString();
+        this.apiKey = in.readString();
     }
 
     public static final Parcelable.Creator<Token> CREATOR = new Parcelable.Creator<Token>() {

@@ -5,24 +5,6 @@ def getGitCommitCountInCurrentBranch() {
     cmd.execute().text.trim().toInteger()
 }
 
-def STORE_FILE, KEY_ALIAS, STORE_PASSWORD, KEY_PASSWORD
-File localConfig = file('local/config.properties')
-if (localConfig.exists()) {
-    Properties configProperties = new Properties()
-    configProperties.load(new FileInputStream(localConfig))
-
-    STORE_FILE = 'local/mojiweather2.keystore'
-    KEY_ALIAS = configProperties['KEY_ALIAS']
-    STORE_PASSWORD = configProperties['KEY_STORE_PASSWORD']
-    KEY_PASSWORD = configProperties['KEY_PASSWORD']
-} else {
-    STORE_FILE = 'debug.keystore'
-    KEY_ALIAS = 'androiddebugkey'
-    STORE_PASSWORD = 'android'
-    KEY_PASSWORD = 'android'
-}
-
-
 android {
     compileSdkVersion "$rootProject.compileSdkVersion".toInteger()
     buildToolsVersion "$rootProject.buildToolsVersion"
@@ -36,11 +18,7 @@ android {
     }
 
     signingConfigs {
-        release {
-            storeFile file("$STORE_FILE")
-            keyAlias "$KEY_ALIAS"
-            storePassword "$STORE_PASSWORD"
-            keyPassword "$KEY_PASSWORD"
+        debug {
         }
 
     }
@@ -71,12 +49,12 @@ android {
         release {
             //minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
         beta {
             applicationIdSuffix '.beta'
             versionNameSuffix '-beta'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
     }
 

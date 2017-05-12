@@ -33,7 +33,8 @@ public class AboutActivity extends BaseActivity {
     private static final String TAG = "AboutActivity";
 
     private final static String URL_FIR_IM = "https://www.pgyer.com/";
-    private final static String URL_AUTHOR = "http://moji.com/";
+    private final static String URL_AUTHOR = "https://ryanhoo.github.io";
+    private final static String URL_AUTHOR_SECOND = "http://gudong.name/";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -62,7 +63,7 @@ public class AboutActivity extends BaseActivity {
         textViewFlavorName.setText(BuildConfig.FLAVOR);
     }
 
-    @OnClick({R.id.button_fir, R.id.button_acknowledgements, R.id.button_author, R.id.text_view_app_version})
+    @OnClick({R.id.button_fir, R.id.button_acknowledgements, R.id.button_author, R.id.button_author_second, R.id.text_view_app_version})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_fir:
@@ -74,6 +75,9 @@ public class AboutActivity extends BaseActivity {
                 break;
             case R.id.button_author:
                 WebViewHelper.openUrl(this, URL_AUTHOR);
+                break;
+            case R.id.button_author_second:
+                WebViewHelper.openUrl(this, URL_AUTHOR_SECOND);
                 break;
             case R.id.text_view_app_version:
                 if (textViewFlavorName.getVisibility() == View.VISIBLE) {

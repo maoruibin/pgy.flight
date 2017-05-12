@@ -18,13 +18,19 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.moji.daypack.R;
+import com.moji.daypack.RxBus;
+import com.moji.daypack.event.SignOutEvent;
 import com.moji.daypack.ui.about.AboutActivity;
 import com.moji.daypack.ui.app.AppsFragment;
 import com.moji.daypack.ui.base.BaseActivity;
 import com.moji.daypack.ui.setting.SettingsActivity;
+import com.moji.daypack.ui.signin.SignInActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * Created with Android Studio.
@@ -123,5 +129,26 @@ public class MainActivity extends BaseActivity {
 
     private void onOpenAbout() {
         startActivity(new Intent(this, AboutActivity.class));
+    }
+
+
+    @Override
+    protected Subscription subscribeEvents() {
+        return RxBus.getInstance().toObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Action1<Object>() {
+                    @Override
+                    public void call(Object o) {
+                        if (o instanceof SignOutEvent) {
+                            onSignOutEvent();
+                        }
+                    }
+                })
+                .subscribe(RxBus.defaultSubscriber());
+    }
+
+    private void onSignOutEvent() {
+        startActivity(new Intent(this, SignInActivity.class));
+        finish();
     }
 }

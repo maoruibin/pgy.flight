@@ -16,8 +16,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.moji.daypack.R;
+import com.moji.daypack.account.UserSession;
 import com.moji.daypack.ui.base.BaseActivity;
 import com.moji.daypack.ui.main.MainActivity;
+import com.moji.daypack.ui.signin.SignInActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -56,7 +58,11 @@ public class SplashScreenActivity extends BaseActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                openMainActivity();
+                if (UserSession.getInstance().isSignedIn()) {
+                    openMainActivity();
+                } else {
+                    openSignInActivity();
+                }
             }
         }, SIGNED_IN_DELAY);
     }
@@ -88,6 +94,14 @@ public class SplashScreenActivity extends BaseActivity {
         startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
         finish();
     }
+
+
+    private void openSignInActivity() {
+        startActivity(new Intent(SplashScreenActivity.this, SignInActivity.class));
+        SplashScreenActivity.this.overridePendingTransition(R.anim.slide_in_from_bottom, android.R.anim.fade_out);
+        finish();
+    }
+
 
     // Animations
 

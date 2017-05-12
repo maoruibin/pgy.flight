@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ff.splash.background"
     >
 
     <android.support.v7.widget.Toolbar
@@ -36,20 +37,20 @@
             />
 
         <EditText
-            android:id="@+id/edit_text_email"
+            android:id="@+id/edit_text_api_key"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/ff.padding.large"
             android:paddingRight="@dimen/ff.padding.large"
             android:paddingTop="@dimen/ff.padding.normal"
             android:paddingBottom="@dimen/ff.padding.normal"
-            android:textSize="20sp"
+            android:textSize="12sp"
             android:textColor="#EAFFFFFF"
             android:textColorHint="#6AFFFFFF"
             android:background="@color/ff.transparent"
-            android:inputType="textEmailAddress"
             android:hint="@string/ff.signin.email.example"
             android:fontFamily="monospace"
+            android:inputType="textPassword"
             fontPath="@string/ff.font.roboto.monospace.regular"
             tools:ignore="MissingPrefix"/>
 
@@ -65,14 +66,14 @@
             />
 
         <EditText
-            android:id="@+id/edit_text_password"
+            android:id="@+id/edit_text_user_key"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/ff.padding.large"
             android:paddingRight="@dimen/ff.padding.large"
             android:paddingTop="@dimen/ff.padding.normal"
             android:paddingBottom="@dimen/ff.padding.normal"
-            android:textSize="20sp"
+            android:textSize="12sp"
             android:textColor="#EAFFFFFF"
             android:textColorHint="#6AFFFFFF"
             android:background="@color/ff.transparent"
@@ -82,7 +83,6 @@
             fontPath="@string/ff.font.roboto.monospace.regular"
             tools:ignore="MissingPrefix"
             />
-
     </LinearLayout>
 
     <TextView

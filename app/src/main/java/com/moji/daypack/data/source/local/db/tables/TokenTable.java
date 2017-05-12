@@ -51,15 +51,15 @@ public final class TokenTable implements BaseColumns, BaseTable<Token> {
 
     public ContentValues toContentValues(Token token) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_ACCESS_TOKEN, token.getAccessToken());
-        contentValues.put(COLUMN_API_TOKEN, token.getApiToken());
+        contentValues.put(COLUMN_ACCESS_TOKEN, token.getUserKey());
+        contentValues.put(COLUMN_API_TOKEN, token.getApiKey());
         return contentValues;
     }
 
     public Token parseCursor(Cursor c) {
         Token token = new Token();
-        token.setAccessToken(c.getString(c.getColumnIndexOrThrow(COLUMN_ACCESS_TOKEN)));
-        token.setApiToken(c.getString(c.getColumnIndexOrThrow(COLUMN_API_TOKEN)));
+        token.setUserKey(c.getString(c.getColumnIndexOrThrow(COLUMN_ACCESS_TOKEN)));
+        token.setApiKey(c.getString(c.getColumnIndexOrThrow(COLUMN_API_TOKEN)));
         return token;
     }
 

@@ -3,10 +3,9 @@ package com.moji.daypack.data.source.remote.api;
 import com.moji.daypack.data.model.AppDetailModel;
 import com.moji.daypack.data.model.AppPgy;
 import com.moji.daypack.data.model.Bean;
-import com.moji.daypack.data.model.Token;
+
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -18,18 +17,6 @@ import rx.Observable;
  * Desc: RESTFulApiService
  */
 public interface ApiService {
-
-    // Token
-
-    @FormUrlEncoded
-    @POST("/login")
-    Observable<Token> accessToken(@Field("email") String email, @Field("password") String password);
-
-    @GET("/user/api_token")
-    Observable<Token> apiToken();
-
-    @POST("/user/api_token")
-    Observable<Token> refreshApiToken();
 
     @FormUrlEncoded
     @POST("/apiv1/user/listMyPublished")

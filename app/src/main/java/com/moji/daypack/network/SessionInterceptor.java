@@ -46,14 +46,14 @@ public class SessionInterceptor implements Interceptor {
             }
             if (isApiTokenRequired) {
                 httpUrl = httpUrl.newBuilder()
-                        .addQueryParameter("api_token", token.getApiToken())
+                        .addQueryParameter("api_token", token.getApiKey())
                         .build();
                 request = request.newBuilder().url(httpUrl).build();
             } else {
                 request = request.newBuilder()
-                        .addHeader("AccessToken", token.getAccessToken())
+                        .addHeader("AccessToken", token.getUserKey())
                         .build();
-                Log.d(TAG, "AccessToken: " + token.getAccessToken());
+                Log.d(TAG, "AccessToken: " + token.getUserKey());
             }
         }
         Log.d(TAG, "Send request: " + request.url());

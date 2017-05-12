@@ -51,8 +51,8 @@
     </style>
 
     <style name="FFTheme.SignIn">
-        <item name="colorPrimary">@color/ff.theme.blue.colorPrimary</item>
-        <item name="colorPrimaryDark">@color/ff.theme.blue.colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/ff.theme.blue.colorAccent</item>
 
         <item name="android:windowBackground">@color/ff.splash.background</item>

@@ -1,6 +1,6 @@
 <resources>
     <string name="ff.app.name">日拱一卒</string>
-    <string name="ff.splash.slogan">墨迹天气内部应用分发平台\nAndroid Client</string>
+    <string name="ff.splash.slogan">蒲公英非官方客户端\nAndroid Client</string>
     <string name="ff.splash.slogan.about">An android version Test Flight\nby using the testing app distribution service provided by pgyer</string>
 
     <!-- Common -->
@@ -19,11 +19,11 @@
     <!-- Sign In -->
     <string name="ff.signin.failed">Sign in failed</string>
     <string name="ff.signin.menu_item.signin">Next</string>
-    <string name="ff.signin.email.hint">Email</string>
-    <string name="ff.signin.password.hint">Password</string>
+    <string name="ff.signin.email.hint">API Key</string>
+    <string name="ff.signin.password.hint">User Key</string>
 
-    <string name="ff.signin.email.example">fir.flight@fir.im</string>
-    <string name="ff.signin.password.example">******</string>
+    <string name="ff.signin.email.example">用来识别API调用者的身份(请确保正确)</string>
+    <string name="ff.signin.password.example">用户Key，用来标识当前用户的身份(请确保正确)</string>
 
     <!-- Main -->
     <string name="ff.main.tab.apps">Apps</string>
@@ -62,7 +62,8 @@
     <string name="ff.acknowledgements">Acknowledgements</string>
     <string name="ff.about.button.fir">pgyer.com</string>
     <string name="ff.about.button.acknowledgements">@string/ff.acknowledgements</string>
-    <string name="ff.about.button.author">© 2016 MOJI-Android Team</string>
+    <string name="ff.about.button.author">© 2017 Ryan Hoo&#160;</string>
+    <string name="ff.about.button.author.second">/ 咕咚</string>
 
     <!-- Settings -->
     <string name="ff.settings">设置</string>

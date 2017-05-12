@@ -24,4 +24,12 @@
             android:summaryOff="关闭"
             />
     </com.jenzz.materialpreference.PreferenceCategory>
+
+    <com.jenzz.materialpreference.PreferenceCategory
+        android:title="其它">
+        <com.jenzz.materialpreference.Preference
+            android:key="preference_sign_out"
+            android:title="注销"/>
+    </com.jenzz.materialpreference.PreferenceCategory>
+
 </PreferenceScreen>

@@ -1,6 +1,8 @@
 package com.moji.daypack.data.source.remote;
 
 import com.moji.daypack.data.model.Bean;
+import com.moji.daypack.data.model.Token;
+import com.moji.daypack.data.source.TokenRepository;
 import com.moji.daypack.data.source.remote.api.ApiService;
 import com.moji.daypack.network.ServerConfig;
 import com.moji.daypack.data.model.AppDetailModel;
@@ -17,9 +19,11 @@ import rx.Observable;
  * Desc: RemoteAppDataSource
  */
 public class RemoteAppDataSource implements AppContract.Remote {
-    private static final String KEY_API = "2332aa84039a5bbe12f9dfdc110e64f6";
-    private static final String KEY_USER = "3172bed7694c12e7336ca602d0c158bb";
     protected ApiService mApi;
+    private static Token mToken;
+    static {
+        mToken = TokenRepository.getInstance().restoreToken();
+    }
 
     public RemoteAppDataSource(ApiService api) {
         mApi = api;
@@ -27,15 +31,15 @@ public class RemoteAppDataSource implements AppContract.Remote {
 
     @Override
     public Observable<AppPgy> apps() {
-        return mApi.apps(KEY_USER,1,KEY_API);
+        return mApi.apps(mToken.getUserKey(),1,mToken.getApiKey());
     }
 
     @Override
     public Observable<Bean<AppDetailModel>> appView(String appKey) {
-        return mApi.view(appKey,KEY_USER,KEY_API);
+        return mApi.view(appKey,mToken.getUserKey(),mToken.getApiKey());
     }
 
     public static String makeDownloadUrl(String appKey){
-        return ServerConfig.API_HOST_PGY+"/apiv1/app/install?aKey="+appKey+"&_api_key="+KEY_API;
+        return ServerConfig.API_HOST_PGY+"/apiv1/app/install?aKey="+appKey+"&_api_key="+mToken.getApiKey();
     }
 }

@@ -15,31 +15,31 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingBottom="@dimen/ff.padding.larger"
         android:layout_centerInParent="true"
         android:animateLayoutChanges="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/ff.padding.larger"
         >
 
         <ImageView
             android:id="@+id/image_view_app_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@mipmap/ic_launcher"
-            android:contentDescription="@string/ff.app.name"/>
+            android:contentDescription="@string/ff.app.name"
+            android:src="@mipmap/ic_launcher"/>
 
         <TextView
             android:id="@+id/text_view_app_name"
+            fontPath="@string/ff.font.roboto.medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ff.padding.large"
-            android:textSize="20sp"
-            android:textColor="@color/ff.theme.light.dark_blue.colorPrimary"
             android:text="@string/ff.app.name"
-            fontPath="@string/ff.font.roboto.medium"
+            android:textColor="@color/ff.theme.light.dark_blue.colorPrimary"
+            android:textSize="20sp"
             tools:ignore="MissingPrefix"/>
 
         <TextView
@@ -47,8 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ff.padding.normal"
-            android:textSize="@dimen/ff.textSize.tips"
             android:textColor="#7A4A4A4A"
+            android:textSize="@dimen/ff.textSize.tips"
             tools:text="1.2.0(16032501)"
             />
 
@@ -57,26 +57,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ff.padding.small"
-            android:textSize="@dimen/ff.textSize.tips"
             android:textColor="#7A4A4A4A"
+            android:textSize="@dimen/ff.textSize.tips"
             android:visibility="gone"
-            tools:visibility="visible"
             tools:text="WanDouJia"
+            tools:visibility="visible"
             />
 
         <TextView
             android:id="@+id/text_view_app_slogan"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="54dp"
             android:layout_marginLeft="@dimen/ff.margin.large"
             android:layout_marginRight="@dimen/ff.margin.large"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="54dp"
-            android:gravity="center"
             android:autoLink="web"
-            android:textSize="@dimen/ff.textSize.text"
-            android:textColor="@color/ff.textColor.tips"
+            android:gravity="center"
             android:text="@string/ff.splash.slogan.about"
+            android:textColor="@color/ff.textColor.tips"
+            android:textSize="@dimen/ff.textSize.text"
             />
 
         <View style="@style/FFDivider"/>
@@ -98,21 +98,38 @@
         <View style="@style/FFDivider"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_author"
-        style="@style/FFButton.About"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minHeight="0dp"
-        android:padding="@dimen/ff.padding.large"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:typeface="monospace"
-        android:textColor="@color/ff.textColor.tips"
-        android:textSize="10sp"
-        android:text="@string/ff.about.button.author"
-        android:background="@color/ff.transparent"
-        fontPath="@string/ff.font.roboto.thin"
-        tools:ignore="MissingPrefix,SmallSp"/>
+        android:padding="@dimen/ff.padding.large">
 
+
+        <TextView
+            android:id="@+id/button_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/ff.transparent"
+            android:minHeight="0dp"
+            android:text="@string/ff.about.button.author"
+            android:textColor="@color/ff.textColor.tips"
+            android:textSize="10sp"
+            android:textAllCaps="false"
+            android:gravity="right"
+            tools:ignore="MissingPrefix,SmallSp"/>
+
+        <TextView
+            android:id="@+id/button_author_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/ff.transparent"
+            android:minHeight="0dp"
+            android:textAllCaps="false"
+            android:text="@string/ff.about.button.author.second"
+            android:gravity="left"
+            android:textColor="@color/ff.textColor.tips"
+            android:textSize="10sp"
+            tools:ignore="MissingPrefix,SmallSp"/>
+    </LinearLayout>
 </RelativeLayout>

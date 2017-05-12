@@ -15,6 +15,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.moji.daypack.R;
 import com.moji.daypack.RxBus;
+import com.moji.daypack.account.UserSession;
 import com.moji.daypack.event.FilterIosEvent;
 import com.moji.daypack.ui.base.BaseActivity;
 
@@ -55,6 +56,7 @@ public class SettingsActivity extends BaseActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.setting);
             findPreference("preference_clear_cache").setOnPreferenceClickListener(this);
+            findPreference("preference_sign_out").setOnPreferenceClickListener(this);
             findPreference("preference_clear_download").setOnPreferenceClickListener(this);
             findPreference("preference_filter_ios").setOnPreferenceChangeListener(this);
         }
@@ -65,9 +67,22 @@ public class SettingsActivity extends BaseActivity {
                 case "preference_clear_cache":
                     clearImageCache();
                     break;
+                case "preference_sign_out":
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage("确定要注销当前账号吗？")
+                            .setPositiveButton(R.string.ff_confirm, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    UserSession.getInstance().signOut();
+                                    getActivity().finish();
+                                }
+                            })
+                            .setNegativeButton(R.string.ff_cancel,null)
+                            .show();
+
+                    break;
                 case "preference_clear_download":
                     new AlertDialog.Builder(getActivity())
-                            .setTitle("提示")
                             .setMessage("确定要清空所有下载的 APK 文件吗？")
                             .setPositiveButton(R.string.ff_confirm, new DialogInterface.OnClickListener() {
                                 @Override

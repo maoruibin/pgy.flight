@@ -39,6 +39,15 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/FFTheme.Main" />
+
+        <activity
+            android:name=".ui.signin.SignInActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/FFTheme.SignIn"
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible"
+            android:screenOrientation="portrait"
+            />
+
         <activity
             android:name="com.moji.daypack.ui.app.AppDetailActivity"
             android:screenOrientation="portrait"

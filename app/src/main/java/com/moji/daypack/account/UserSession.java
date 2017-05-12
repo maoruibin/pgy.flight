@@ -54,7 +54,7 @@ public class UserSession {
     }
 
     public boolean isSignedIn() {
-        return mToken != null && mToken.getAccessToken() != null;
+        return mToken != null && mToken.getUserKey() != null;
     }
 
     /**
@@ -63,8 +63,15 @@ public class UserSession {
      * 3. If api token is null, force to refresh api token
      * 4. Request user info
      */
-    public Observable<User> signIn(final String email, final String password) {
-        return mTokenRepository.accessToken(email, password)
+    public void signIn(final String apiKey, final String userKey) {
+        mToken = new Token();
+        mToken.setApiKey(apiKey);
+        mToken.setUserKey(userKey);
+        storeSession();
+        RxBus.getInstance().post(new SignInEvent());
+    }
+    public Observable<User> signInV(final String apiKey, final String userKey) {
+        return mTokenRepository.accessToken(apiKey, userKey)
                 .flatMap(new Func1<Token, Observable<Token>>() {
                     @Override
                     public Observable<Token> call(Token token) {
@@ -76,7 +83,7 @@ public class UserSession {
                 .doOnNext(new Action1<Token>() {
                     @Override
                     public void call(Token token) {
-                        if (TextUtils.isEmpty(token.getApiToken())) {
+                        if (TextUtils.isEmpty(token.getApiKey())) {
                             // It's possible to get an empty api token, so you need to refresh api token
                             throw new ApiTokenInvalidException();
                         }
@@ -99,7 +106,7 @@ public class UserSession {
                 .doOnNext(new Action1<Token>() {
                     @Override
                     public void call(Token token) {
-                        mToken.setApiToken(token.getApiToken());
+                        mToken.setApiKey(token.getApiKey());
                     }
                 })
                 .flatMap(new Func1<Token, Observable<User>>() {
@@ -142,25 +149,10 @@ public class UserSession {
                     }
                 });
     }
-
-    public Observable<Token> refreshApiToken() {
-        return mTokenRepository.refreshApiToken().doOnNext(new Action1<Token>() {
-            @Override
-            public void call(Token token) {
-                if (token == null || TextUtils.isEmpty(token.getApiToken())) {
-                    throw new RuntimeException("Invalid api token");
-                }
-                mToken.setApiToken(token.getApiToken());
-                storeSession();
-            }
-        });
-    }
-
     // Session Store & Restore
 
     private void storeSession() {
         mTokenRepository.storeToken(mToken);
-        // mUserRepository.storeUser(); // Already handled by UserRepository
     }
 
     private void restoreSession() {
