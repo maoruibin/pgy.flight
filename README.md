@@ -9,7 +9,7 @@ pgy.flight 是在 [fir.flight](https://github.com/ryanhoo/fir.flight) 基础上�
 
 ## Download 
 
-[fir](https://fir.im/fwl4)
+[link](https://fir.im/fwl4)
 
 ## Shot
 
